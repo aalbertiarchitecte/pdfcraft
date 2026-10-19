@@ -46,6 +46,8 @@ pub struct MeasureView {
     pub reading: Option<Reading>,
     pub scale: Option<Scale>,
     pub error: Option<String>,
+    /// Why snapping is limited on this page (shown under Advanced).
+    pub snap_warning: Option<String>,
     pub snaps: measure::snap::SnapOptions,
     pub snap_enabled: bool,
     pub sensitivity: f64,
@@ -79,6 +81,7 @@ impl Default for MeasureView {
             reading: None,
             scale: None,
             error: None,
+            snap_warning: None,
             snaps: Default::default(),
             snap_enabled: true,
             sensitivity: 6.0,
@@ -118,7 +121,6 @@ pub(crate) fn page_input(
 ) {
     let page = cx.page;
     let xf = cx.xf;
-    let author = &cx.prefs.author;
     if !doc.allows_annotation() {
         return;
     }
@@ -145,26 +147,27 @@ pub(crate) fn page_input(
         let (vx, vy) = xf.screen_to_view(pos);
         let [x, y] = info.view_to_user(vx, vy);
         let mut point = [f64::from(x), f64::from(y)];
+        state.snap_warning = None;
         if state.snap_enabled {
             if state.paths.as_ref().is_none_or(|(p, g, _)| *p != page || *g != doc.edit_generation()) {
                 state.paths = Some((page, doc.edit_generation(), doc.measurement_paths(page)));
             }
             let pixels_per_unit = (xf.rect.width() / xf.pw).max(1e-6);
             if let Some((_, _, Err(e))) = &state.paths {
-                state.error = Some(e.clone());
+                state.snap_warning = Some(e.clone());
             }
             if let Some((_, _, Ok(paths))) = &state.paths {
                 if paths.truncated {
-                    state.error = Some(tl!("This drawing exceeds the snapping limit; only the first paths are used.").into());
+                    state.snap_warning = Some(tl!("This drawing exceeds the snapping limit; only the first paths are used.").into());
                 } else if paths.unreadable > 0 {
-                    state.error = Some(tl!("Some page content couldn't be read; snapping uses the rest.").into());
+                    state.snap_warning = Some(tl!("Some page content couldn't be read; snapping uses the rest.").into());
                 }
                 let tolerance = doc
                     .measurement_to_user(page, [f64::from(vx) + state.sensitivity / f64::from(pixels_per_unit), f64::from(vy)])
                     .map(|p| measure::distance(point, p))
                     .unwrap_or(state.sensitivity / f64::from(pixels_per_unit));
                 if state.snaps.intersections && paths.intersection_limited(point, tolerance) {
-                    state.error = Some(tl!("This area has too many overlapping paths; intersection snapping is limited.").into());
+                    state.snap_warning = Some(tl!("This area has too many overlapping paths; intersection snapping is limited.").into());
                 }
                 if let Ok(Some(hit)) = paths.snap(point, tolerance, state.snaps) {
                     point = hit.point;
@@ -203,13 +206,13 @@ pub(crate) fn page_input(
             }
             let finishes = closes || matches!(tool, Tool::Distance | Tool::Calibrate) && state.points.len() == 2;
             if finishes {
-                finish(state, &mut view.pending_edit, doc, page, tool, author);
+                finish(state, &mut view.pending_edit, doc, page, tool, cx);
             }
         }
     }
     if state.page == Some(page) && !state.points.is_empty() {
         if (resp.double_clicked() || !typing && ui.input(|i| i.key_pressed(egui::Key::Enter))) && matches!(tool, Tool::Perimeter | Tool::Area) {
-            finish(state, &mut view.pending_edit, doc, page, tool, author);
+            finish(state, &mut view.pending_edit, doc, page, tool, cx);
         }
         if !typing && ui.input(|i| i.key_pressed(egui::Key::Backspace)) {
             state.points.pop();
@@ -227,7 +230,7 @@ pub(crate) fn page_input(
             }
         }
         let positions: Vec<Pos2> = points.iter().map(|&p| screen(p)).collect();
-        let stroke = Stroke::new(1.5, Color32::from_rgb(0, 120, 214));
+        let stroke = Stroke::new(1.5, crate::comments::color32(cx.prefs.measure_style.color));
         for pair in positions.windows(2) {
             if let [a, b] = pair {
                 ui.painter().line_segment([*a, *b], stroke);
@@ -261,7 +264,11 @@ pub(crate) fn page_input(
         }
     }
 }
-fn finish(state: &mut MeasureView, pending: &mut Option<Edit>, doc: &Document, page: usize, tool: Tool, author: &str) {
+/// New measurements: PdfCraft blue, 1 pt.
+pub(crate) fn default_style() -> Style {
+    Style { color: [0.0, 0.47, 0.84], ..Style::default() }
+}
+fn finish(state: &mut MeasureView, pending: &mut Option<Edit>, doc: &Document, page: usize, tool: Tool, cx: &crate::comments::PageCx<'_>) {
     if tool == Tool::Calibrate {
         if let [a, b] = state.points.as_slice() {
             let a = doc.measurement_to_view(page, *a);
@@ -286,9 +293,9 @@ fn finish(state: &mut MeasureView, pending: &mut Option<Edit>, doc: &Document, p
             kind: tool.kind(),
             points: state.points.clone(),
             scale,
-            style: Style { color: [0.0, 0.47, 0.84], ..Style::default() },
+            style: cx.prefs.measure_style.clone(),
             label: state.label.clone(),
-            author: author.into(),
+            author: cx.prefs.author.clone(),
         }));
         state.cancel();
     }
@@ -319,6 +326,18 @@ fn tool_tile(ui: &mut egui::Ui, t: &Tokens, icon: &str, label: &str, active: boo
     crate::widgets::paint_left(ui, egui::pos2(x, body.bottom() - 13.0), label, font, fg, width - 8.0);
     crate::theme::hand(resp)
 }
+/// A tool's tooltip: its name, its steps and the keys that help while drawing.
+fn tool_tip(tool: Tool) -> String {
+    let (name, steps) = match tool {
+        Tool::Distance => (tl!("Distance"), tl!("1. Choose the plan scale. 2. Click two points.")),
+        Tool::Perimeter => (tl!("Perimeter"), tl!("1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.")),
+        Tool::Area => (tl!("Area"), tl!("1. Choose the plan scale. 2. Click each corner, then click the first point to close.")),
+        Tool::Calibrate => {
+            return tl!("1. Click both ends of a known dimension. 2. Type its real length and press Enter.").into();
+        }
+    };
+    format!("{name}\n{steps}\n{}", tl!("Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels."))
+}
 /// Whole-word name of a length unit for the scale status, or the symbol itself.
 fn unit_name(unit: &str) -> String {
     match unit {
@@ -344,7 +363,7 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, t: &Tokens) {
         ui.spacing_mut().item_spacing.x = 6.0;
         let width = ((ui.available_width() - 12.0) / 3.0).max(60.0);
         for (label, icon, value) in TOOLS {
-            if tool_tile(ui, t, icon, tl!(label), current == Some(value), width).on_hover_text(tl!(label)).clicked() {
+            if tool_tile(ui, t, icon, tl!(label), current == Some(value), width).on_hover_text(tool_tip(value)).clicked() {
                 tool = Some(value);
             }
         }
@@ -354,6 +373,7 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, t: &Tokens) {
     let units = app.units;
     let page = app.views[index].current;
     let info = doc.info.pages.get(page).cloned();
+    let selected = app.views[index].comments.selected;
     let state = &mut app.views[index].measure;
     let generation = doc.edit_generation();
     if state.listing.as_ref().is_none_or(|(g, _)| *g != generation) {
@@ -476,39 +496,42 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, t: &Tokens) {
                 }
             });
         }
-        if ui
-            .button(tl!("Calibrate on a known dimension"))
-            .on_hover_text(tl!("Click both ends of a dimension you know, then type its real length."))
-            .clicked()
-        {
+        if ui.link(tl!("Calibrate on a known dimension")).on_hover_text(tool_tip(Tool::Calibrate)).clicked() {
             tool = Some(Tool::Calibrate);
         }
     });
-    ui.add_space(6.0);
-    // 3. What to do, in steps.
-    ui.label(tl!(match current {
-        Some(Tool::Distance) => "1. Choose the plan scale. 2. Click two points.",
-        Some(Tool::Perimeter) => "1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.",
-        Some(Tool::Area) => "1. Choose the plan scale. 2. Click each corner, then click the first point to close.",
-        Some(Tool::Calibrate) => "1. Click both ends of a known dimension. 2. Type its real length and press Enter.",
-        None => "1. Choose the plan scale. 2. Pick a tool and click on the plan.",
-    }));
-    ui.label(egui::RichText::new(tl!("Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels.")).small().color(t.text_muted));
-    ui.separator();
-    ui.label(tl!("Measurement information"));
-    if let Some(reading) = &state.reading {
-        ui.label(egui::RichText::new(&reading.label).strong());
-        ui.label(format!("X: {:.3}   Y: {:.3}", reading.delta_x, reading.delta_y));
-        ui.label(format!("{}: {:.2}°", tl!("Angle"), reading.angle));
-        if let Some(scale) = &state.scale {
-            ui.label(&scale.ratio);
-        }
-    } else {
-        ui.label(tl!("Click the first point to begin."));
-    }
+    // Colour and line width of new measurements, and of the selected one.
+    let measured = |p: usize, i: usize| {
+        state.listing.as_ref().and_then(|(_, l)| l.as_ref().ok()).is_some_and(|l| l.measurements.iter().any(|m| m.page == p && m.index == i))
+    };
+    let target = selected.filter(|(p, i)| editable && measured(*p, *i));
+    let mut restyle = None;
+    ui.add_space(4.0);
     ui.horizontal(|ui| {
-        ui.label(tl!("Label"));
-        ui.add(crate::widgets::line(&mut state.label).desired_width(130.0).char_limit(128));
+        let style = &mut app.comment_prefs.measure_style;
+        ui.label(tl!("Colour"));
+        let (r, resp) = ui.allocate_exact_size(egui::vec2(28.0, 24.0), egui::Sense::click());
+        ui.painter().circle_filled(r.center(), 9.0, crate::comments::color32(style.color));
+        ui.painter().circle_stroke(r.center(), 9.0, Stroke::new(1.0, Color32::from_black_alpha(50)));
+        resp.widget_info(|| egui::WidgetInfo::labeled(egui::WidgetType::Button, true, tl!("Colour")));
+        let resp = crate::theme::hand(resp).on_hover_text(tl!("Colour"));
+        egui::Popup::menu(&resp).show(|ui| {
+            if let Some(c) = crate::comments::swatch_grid(ui, Some(style.color)) {
+                style.color = c;
+                restyle = Some((Some(c), None));
+                ui.close();
+            }
+        });
+        ui.add_space(8.0);
+        let resp = crate::icons::button(ui, "sliders-horizontal", 26.0, false, tl!("Line thickness"));
+        egui::Popup::menu(&resp).close_behavior(egui::PopupCloseBehavior::CloseOnClickOutside).show(|ui| {
+            ui.set_min_width(180.0);
+            ui.label(egui::RichText::new(tl!("Line thickness")).font(crate::theme::semibold(12.0)));
+            let r = ui.add(egui::Slider::new(&mut style.width, 0.5..=12.0).step_by(0.5).suffix(" pt"));
+            if r.drag_stopped() || r.changed() && !r.dragged() {
+                restyle = Some((None, Some(style.width)));
+            }
+        });
     });
     if let Some(error) = &state.error {
         ui.colored_label(Color32::from_rgb(190, 50, 50), error);
@@ -516,10 +539,23 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, t: &Tokens) {
     ui.separator();
     // 4. Saved measurements.
     let mut select = None;
+    let mut export = false;
     match state.listing.as_ref().map(|(_, l)| l) {
         None => {}
         Some(Ok(listing)) => {
-            ui.label(format!("{}: {}", tl!("Saved measurements"), listing.measurements.len()));
+            ui.horizontal(|ui| {
+                ui.label(egui::RichText::new(format!("{}: {}", tl!("Saved measurements"), listing.measurements.len())).strong());
+                ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                    let enabled = !listing.measurements.is_empty();
+                    if ui
+                        .add_enabled_ui(enabled, |ui| crate::icons::button(ui, "file-output", 26.0, false, tl!("Export measurements as CSV")))
+                        .inner
+                        .clicked()
+                    {
+                        export = true;
+                    }
+                });
+            });
             if !listing.unsupported.is_empty() {
                 let reasons: Vec<String> =
                     listing.unsupported.iter().map(|u| format!("{} {}: {}", tl!("Page"), u.page.saturating_add(1), u.reason)).collect();
@@ -528,7 +564,9 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, t: &Tokens) {
             }
             egui::ScrollArea::vertical().id_salt("measurement-list").max_height(140.0).show(ui, |ui| {
                 for m in &listing.measurements {
-                    if ui.button(format!("{} {}: {} {}", tl!("Page"), m.page.saturating_add(1), m.reading.label, m.label)).clicked() {
+                    let on = selected == Some((m.page, m.index));
+                    let text = format!("{} {} · {} {}", tl!("Page"), m.page.saturating_add(1), m.reading.label, m.label);
+                    if ui.selectable_label(on, text.trim_end()).clicked() {
                         select = Some((m.page, m.index, m.reading.clone(), m.scale.clone()));
                     }
                 }
@@ -538,13 +576,28 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, t: &Tokens) {
             ui.colored_label(Color32::from_rgb(190, 50, 50), e);
         }
     }
-    let export = ui.button(tl!("Export measurements as CSV")).clicked();
     // 5. Advanced: the scale's raw fields, its extent, and snapping.
     ui.add_space(6.0);
     egui::CollapsingHeader::new(egui::RichText::new(crate::i18n::upper_label("Advanced")).font(crate::theme::semibold(10.5)).color(t.text_faint))
         .id_salt("measure-advanced")
         .default_open(false)
         .show(ui, |ui| {
+            ui.label(tl!("Measurement information"));
+            if let Some(reading) = &state.reading {
+                ui.label(egui::RichText::new(&reading.label).strong());
+                ui.label(format!("X: {:.3}   Y: {:.3}", reading.delta_x, reading.delta_y));
+                ui.label(format!("{}: {:.2}°", tl!("Angle"), reading.angle));
+                if let Some(scale) = &state.scale {
+                    ui.label(&scale.ratio);
+                }
+            } else {
+                ui.label(tl!("Click the first point to begin."));
+            }
+            ui.horizontal(|ui| {
+                ui.label(tl!("Label"));
+                ui.add(crate::widgets::line(&mut state.label).desired_width(130.0).char_limit(128));
+            });
+            ui.separator();
             ui.horizontal(|ui| {
                 ui.add(egui::DragValue::new(&mut state.drawing_points).range(0.000001..=1e9).prefix("pt "));
                 ui.label("=");
@@ -580,6 +633,9 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, t: &Tokens) {
                 });
                 ui.add(egui::Slider::new(&mut state.sensitivity, 1.0..=20.0).text(tl!("Sensitivity")));
             }
+            if let Some(warning) = &state.snap_warning {
+                ui.colored_label(Color32::from_rgb(190, 120, 30), warning);
+            }
         });
     if apply
         && editable
@@ -598,6 +654,9 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, t: &Tokens) {
             }
             Err(e) => app.views[index].measure.error = Some(e),
         }
+    }
+    if let (Some((page, annotation)), Some((color, width))) = (target, restyle) {
+        app.views[index].pending_edit = Some(Edit::StyleAnnotation { page, index: annotation, color, opacity: None, width, endings: None });
     }
     if let Some((page, annotation, reading, scale)) = select {
         app.views[index].current = page;

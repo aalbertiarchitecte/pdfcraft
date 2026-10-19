@@ -252,6 +252,8 @@ pub struct CommentPrefs {
     pub group_tool: [CommentTool; 3],
     /// Hide hover previews on highlight annotations when they contain no comment text beyond the author.
     pub hide_empty_highlight_hover: bool,
+    /// Colour and line width of new measurements (Measure objects), for this session.
+    pub measure_style: Style,
 }
 
 impl Default for CommentPrefs {
@@ -262,6 +264,7 @@ impl Default for CommentPrefs {
             pinned: false,
             group_tool: [CommentTool::Note, CommentTool::Highlight, CommentTool::Ink],
             hide_empty_highlight_hover: false,
+            measure_style: crate::measure_ui::default_style(),
         }
     }
 }

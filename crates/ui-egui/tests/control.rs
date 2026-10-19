@@ -1336,6 +1336,43 @@ fn choosing_a_plan_scale_applies_it_at_once() {
 }
 
 #[test]
+fn measurement_colour_is_written_to_new_and_selected_annotations() {
+    let (mut h, c) = harness_pages(1);
+    let doc = h.state().views[0].id;
+    h.state_mut().set_option("zoom", "100").unwrap();
+    ok(&mut h, &c, "ui.command", json!({"id":"measure.distance"}));
+    h.run_steps(3);
+    h.state_mut().views[0].measure.snap_enabled = false;
+    h.get_by_role_and_label(egui::accesskit::Role::Button, "Colour").click();
+    h.run_steps(2);
+    h.get_by_label("Red").click();
+    h.run_steps(2);
+    for (x, y) in [(20.0, 30.0), (120.0, 30.0)] {
+        let r = h.state().views[0].page_screen_rect(0).unwrap();
+        ok(&mut h, &c, "ui.click", json!({"x":r.left()+x*r.width()/200.0,"y":r.top()+y*r.height()/300.0}));
+        h.run_steps(2);
+    }
+    h.run_steps(2);
+    let colour = |h: &Harness<'static, PdfCraftApp>| {
+        let d = h.state().session.get(doc).unwrap();
+        let a = d.info.annotations.iter().find(|a| a.subtype == "Line").expect("the measurement");
+        (a.page, a.index, a.color.expect("/C"))
+    };
+    let (_, _, red) = colour(&h);
+    assert!((red[0] - 0.89).abs() < 0.01 && (red[1] - 0.13).abs() < 0.01 && (red[2] - 0.13).abs() < 0.01, "{red:?}");
+    // Picking it in the list selects it; a new colour restyles it, caption included.
+    h.get_by(|n| n.label().is_some_and(|l| l.starts_with("Page 1 · "))).click();
+    h.run_steps(3);
+    h.get_by_role_and_label(egui::accesskit::Role::Button, "Colour").click();
+    h.run_steps(2);
+    h.get_by_label("Green").click();
+    h.run_steps(3);
+    let (_, _, green) = colour(&h);
+    assert!((green[0] - 0.18).abs() < 0.01 && (green[1] - 0.62).abs() < 0.01, "{green:?}");
+    assert_eq!(h.state().comment_prefs.measure_style.color, [0.18, 0.62, 0.36]);
+}
+
+#[test]
 fn docking_pointer_group_float_close_restore_and_document_commands() {
     use pdfcraft_ui_egui::docking::Panel;
     let (mut h, c) = harness();
