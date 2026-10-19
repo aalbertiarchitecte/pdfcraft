@@ -1326,6 +1326,13 @@ fn choosing_a_plan_scale_applies_it_at_once() {
     h.run_steps(3);
     let scale = h.state().session.get(doc).unwrap().measurement_viewport_scale(0, [100.0, 150.0]).unwrap().unwrap();
     assert_eq!((scale.unit.as_str(), scale.ratio.as_str()), ("cm", "1:200"));
+    // Decimals sit beside the unit and apply at once too.
+    combo(&mut h, "0.00");
+    h.run_steps(2);
+    h.get_by_label("0.000").click();
+    h.run_steps(3);
+    let scale = h.state().session.get(doc).unwrap().measurement_viewport_scale(0, [100.0, 150.0]).unwrap().unwrap();
+    assert_eq!((scale.unit.as_str(), scale.ratio.as_str(), scale.precision), ("cm", "1:200", 3));
 }
 
 #[test]

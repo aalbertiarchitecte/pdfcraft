@@ -392,10 +392,10 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, t: &Tokens) {
     let mut apply = false;
     widgets::section_title(ui, tl!("Plan scale"));
     ui.add_enabled_ui(editable, |ui| {
+        let mut chosen = None;
         ui.horizontal(|ui| {
             let shown =
                 defined.as_ref().map(|s| ratio_of(1.0, s.x * s.distance_factor, &s.unit).map(format_ratio).unwrap_or_else(|| s.ratio.clone()));
-            let mut chosen = None;
             egui::ComboBox::from_id_salt("measure-ratio").selected_text(shown.clone().unwrap_or_else(|| "—".into())).width(90.0).show_ui(ui, |ui| {
                 for n in RATIOS {
                     if ui.selectable_label(shown.as_deref() == Some(format_ratio(n).as_str()), format_ratio(n)).clicked() {
@@ -409,6 +409,10 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, t: &Tokens) {
             {
                 chosen = Some(n);
             }
+        });
+        // The unit and decimals of readings, on their own row so the panel stays narrow.
+        ui.horizontal(|ui| {
+            ui.label(tl!("Unit"));
             let mut unit = state.unit.clone();
             egui::ComboBox::from_id_salt("measure-unit").selected_text(unit.clone()).width(56.0).show_ui(ui, |ui| {
                 for u in UNITS {
@@ -426,11 +430,25 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, t: &Tokens) {
                 state.unit = unit;
                 apply |= defined.is_some();
             }
-            if let Some(n) = chosen {
-                set_ratio(state, n);
-                apply = true;
+            // Decimals shown in readings: 0, 0.0, 0.00 or 0.000.
+            let mut precision = state.precision;
+            ui.add_space(8.0);
+            ui.label(tl!("Decimals"));
+            let example = |p: u8| if p == 0 { "0".to_string() } else { format!("0.{}", "0".repeat(usize::from(p))) };
+            egui::ComboBox::from_id_salt("measure-decimals").selected_text(example(precision)).width(56.0).show_ui(ui, |ui| {
+                for p in 0..=3u8 {
+                    ui.selectable_value(&mut precision, p, example(p));
+                }
+            });
+            if precision != state.precision {
+                state.precision = precision;
+                apply |= defined.is_some();
             }
         });
+        if let Some(n) = chosen {
+            set_ratio(state, n);
+            apply = true;
+        }
         // The state of the page: real units at a scale, or paper size.
         match &defined {
             Some(scale) => {
@@ -533,7 +551,6 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, t: &Tokens) {
                 ui.add(egui::DragValue::new(&mut state.real_distance).range(0.000001..=1e12));
                 ui.label(&state.unit);
             });
-            ui.add(egui::DragValue::new(&mut state.precision).range(0..=6).prefix(format!("{} ", tl!("Decimals"))));
             ui.add(widgets::checkbox(&mut state.whole_page, tl!("Entire page")));
             if !state.whole_page {
                 ui.label(tl!("Viewport rectangle in page points (x, y, width, height)"));
