@@ -1929,6 +1929,11 @@
 	Export measurements	Өлшемдерді экспорттау
 	Open a PDF to measure it.	Өлшеу үшін PDF құжатын ашыңыз.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Шыңдарды шертіңіз. Enter немесе қос шерту периметр мен ауданды аяқтайды. Ауданды жабу үшін бірінші нүктені шертіңіз.
+	Calibrate	Калибрлеу
+	Common scales	Жиі масштабтар
+	Real measurements at {ratio}	{ratio} масштабындағы нақты өлшемдер
+	Paper size — choose the scale	Қағаз өлшемі — масштабты таңдаңыз
+	Measurements	Өлшемдер
 	metres	метр
 	centimetres	сантиметр
 	millimetres	миллиметр

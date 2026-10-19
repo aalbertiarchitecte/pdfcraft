@@ -2019,6 +2019,11 @@
 	Export measurements	測定結果を書き出す
 	Open a PDF to measure it.	測定するPDFを開いてください。
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	頂点をクリックします。Enterまたはダブルクリックで周長や面積の測定を終了します。最初の点をクリックすると面積を閉じます。
+	Calibrate	校正
+	Common scales	よく使う縮尺
+	Real measurements at {ratio}	縮尺 {ratio} の実寸
+	Paper size — choose the scale	用紙上の寸法 — 縮尺を選択
+	Measurements	測定
 	metres	メートル
 	centimetres	センチメートル
 	millimetres	ミリメートル

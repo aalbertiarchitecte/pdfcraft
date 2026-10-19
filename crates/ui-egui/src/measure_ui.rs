@@ -338,15 +338,6 @@ fn tool_tip(tool: Tool) -> String {
     };
     format!("{name}\n{steps}\n{}", tl!("Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels."))
 }
-/// Whole-word name of a length unit for the scale status, or the symbol itself.
-fn unit_name(unit: &str) -> String {
-    match unit {
-        "m" => tl!("metres").into(),
-        "cm" => tl!("centimetres").into(),
-        "mm" => tl!("millimetres").into(),
-        other => other.into(),
-    }
-}
 fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, t: &Tokens) {
     crate::widgets::begin_dialog(ui);
     let Some((index, id)) = app.active_ids() else {
@@ -370,7 +361,6 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, t: &Tokens) {
     });
     ui.add_space(8.0);
     let Some(doc) = app.session.get(id) else { return };
-    let units = app.units;
     let page = app.views[index].current;
     let info = doc.info.pages.get(page).cloned();
     let selected = app.views[index].comments.selected;
@@ -408,150 +398,193 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, t: &Tokens) {
             defined.as_ref().and_then(|_| ratio_of(state.drawing_points, state.real_distance, &state.unit)).map(format_ratio).unwrap_or_default();
     }
     let editable = doc.allows_annotation();
-    // 2. The plan scale, applied as soon as it is chosen.
+    // 2. Scale, unit and colour, on a grid: labels on the left, one control each.
     let mut apply = false;
-    widgets::section_title(ui, tl!("Plan scale"));
-    ui.add_enabled_ui(editable, |ui| {
-        let mut chosen = None;
-        ui.horizontal(|ui| {
-            let shown =
-                defined.as_ref().map(|s| ratio_of(1.0, s.x * s.distance_factor, &s.unit).map(format_ratio).unwrap_or_else(|| s.ratio.clone()));
-            egui::ComboBox::from_id_salt("measure-ratio").selected_text(shown.clone().unwrap_or_else(|| "—".into())).width(90.0).show_ui(ui, |ui| {
-                for n in RATIOS {
-                    if ui.selectable_label(shown.as_deref() == Some(format_ratio(n).as_str()), format_ratio(n)).clicked() {
-                        chosen = Some(n);
-                    }
-                }
-            });
-            let typed = ui.add(crate::widgets::line(&mut state.ratio_text).hint_text("1:N").desired_width(64.0).char_limit(16));
-            if typed.lost_focus()
-                && let Some(n) = parse_ratio(&state.ratio_text)
-            {
-                chosen = Some(n);
-            }
-        });
-        // The unit and decimals of readings, on their own row so the panel stays narrow.
-        ui.horizontal(|ui| {
-            ui.label(tl!("Unit"));
-            let mut unit = state.unit.clone();
-            egui::ComboBox::from_id_salt("measure-unit").selected_text(unit.clone()).width(56.0).show_ui(ui, |ui| {
-                for u in UNITS {
-                    ui.selectable_value(&mut unit, u.to_string(), u);
-                }
-            });
-            if unit != state.unit {
-                let n = ratio_of(state.drawing_points, state.real_distance, &state.unit);
-                match (n, metres_per(&state.unit), metres_per(&unit)) {
-                    // Keep the ratio, so the plan reads the same in the new unit.
-                    (Some(n), _, _) if defined.is_some() => chosen = Some(n),
-                    (_, Some(from), Some(to)) => state.real_distance *= from / to,
-                    _ => {}
-                }
-                state.unit = unit;
-                apply |= defined.is_some();
-            }
-            // Decimals shown in readings: 0, 0.0, 0.00 or 0.000.
-            let mut precision = state.precision;
-            ui.add_space(8.0);
-            ui.label(tl!("Decimals"));
-            let example = |p: u8| if p == 0 { "0".to_string() } else { format!("0.{}", "0".repeat(usize::from(p))) };
-            egui::ComboBox::from_id_salt("measure-decimals").selected_text(example(precision)).width(56.0).show_ui(ui, |ui| {
-                for p in 0..=3u8 {
-                    ui.selectable_value(&mut precision, p, example(p));
-                }
-            });
-            if precision != state.precision {
-                state.precision = precision;
-                apply |= defined.is_some();
-            }
-        });
-        if let Some(n) = chosen {
-            set_ratio(state, n);
-            apply = true;
-        }
-        // The state of the page: real units at a scale, or paper size.
-        match &defined {
-            Some(scale) => {
-                let ratio = ratio_of(1.0, scale.x * scale.distance_factor, &scale.unit).map(format_ratio).unwrap_or_else(|| scale.ratio.clone());
-                ui.colored_label(
-                    Color32::from_rgb(0x1E, 0x7B, 0x43),
-                    crate::i18n::fmt(tl!("Measurements are in real {unit} at {ratio}."), &[("unit", &unit_name(&scale.unit)), ("ratio", &ratio)]),
-                );
-            }
-            None => {
-                ui.colored_label(
-                    Color32::from_rgb(190, 110, 20),
-                    crate::i18n::fmt(tl!("No scale: measurements are paper size ({unit}). Choose the plan scale."), &[("unit", units.label())]),
-                );
-            }
-        }
-        if state.calibrated {
-            ui.label(tl!("Type the real length of this dimension, then press Enter."));
-            ui.horizontal(|ui| {
-                ui.label(tl!("Real length"));
-                let r = ui.add(egui::DragValue::new(&mut state.real_distance).range(0.000001..=1e12).speed(0.01));
-                ui.label(&state.unit);
-                if r.lost_focus() || r.drag_stopped() {
-                    apply = true;
-                }
-            });
-        }
-        if ui.link(tl!("Calibrate on a known dimension")).on_hover_text(tool_tip(Tool::Calibrate)).clicked() {
-            tool = Some(Tool::Calibrate);
-        }
-    });
-    // Colour and line width of new measurements, and of the selected one.
+    let mut chosen = None;
     let measured = |p: usize, i: usize| {
         state.listing.as_ref().and_then(|(_, l)| l.as_ref().ok()).is_some_and(|l| l.measurements.iter().any(|m| m.page == p && m.index == i))
     };
     let target = selected.filter(|(p, i)| editable && measured(*p, *i));
     let mut restyle = None;
+    let orange = Color32::from_rgb(200, 120, 30);
+    let label = |ui: &mut egui::Ui, text: &str| {
+        ui.label(egui::RichText::new(text).color(t.text_muted));
+    };
     ui.add_space(4.0);
-    ui.horizontal(|ui| {
-        let style = &mut app.comment_prefs.measure_style;
-        ui.label(tl!("Colour"));
-        let (r, resp) = ui.allocate_exact_size(egui::vec2(28.0, 24.0), egui::Sense::click());
-        ui.painter().circle_filled(r.center(), 9.0, crate::comments::color32(style.color));
-        ui.painter().circle_stroke(r.center(), 9.0, Stroke::new(1.0, Color32::from_black_alpha(50)));
-        resp.widget_info(|| egui::WidgetInfo::labeled(egui::WidgetType::Button, true, tl!("Colour")));
-        let resp = crate::theme::hand(resp).on_hover_text(tl!("Colour"));
-        egui::Popup::menu(&resp).show(|ui| {
-            if let Some(c) = crate::comments::swatch_grid(ui, Some(style.color)) {
-                style.color = c;
-                restyle = Some((Some(c), None));
-                ui.close();
+    egui::Grid::new("measure-grid").num_columns(2).spacing(egui::vec2(10.0, 8.0)).show(ui, |ui| {
+        // Scale: one field, "1:N", with the common scales under its arrow.
+        label(ui, tl!("Scale"));
+        ui.vertical(|ui| {
+            ui.horizontal(|ui| {
+                ui.add_enabled_ui(editable, |ui| {
+                    ui.spacing_mut().item_spacing.x = 2.0;
+                    // The field and its arrow read as one control, ringed in orange while the
+                    // page has no scale.
+                    let ring = if defined.is_none() { orange.gamma_multiply(0.85) } else { t.border };
+                    let framed = egui::Frame::NONE
+                        .fill(t.field)
+                        .stroke(Stroke::new(1.0, ring))
+                        .corner_radius(egui::CornerRadius::same(4))
+                        .inner_margin(egui::Margin { left: 6, right: 0, top: 0, bottom: 0 })
+                        .show(ui, |ui| {
+                            ui.spacing_mut().item_spacing.x = 0.0;
+                            let typed = ui.add(
+                                egui::TextEdit::singleline(&mut state.ratio_text)
+                                    .frame(egui::Frame::NONE)
+                                    .hint_text("1:100")
+                                    .desired_width(58.0)
+                                    .char_limit(16)
+                                    .vertical_align(egui::Align::Center),
+                            );
+                            typed.widget_info(|| egui::WidgetInfo::labeled(egui::WidgetType::TextEdit, true, tl!("Scale")));
+                            let arrow = crate::icons::button(ui, "chevron-down", 24.0, false, tl!("Common scales"));
+                            (typed, arrow)
+                        })
+                        .inner;
+                    let (typed, arrow) = framed;
+                    if typed.lost_focus()
+                        && let Some(n) = parse_ratio(&state.ratio_text)
+                    {
+                        chosen = Some(n);
+                    }
+                    egui::Popup::menu(&arrow).show(|ui| {
+                        for n in RATIOS {
+                            if ui.selectable_label(state.ratio_text == format_ratio(n), format_ratio(n)).clicked() {
+                                chosen = Some(n);
+                                ui.close();
+                            }
+                        }
+                    });
+                    ui.add_space(6.0);
+                    if crate::widgets::ghost_button_sized(ui, "ruler", tl!("Calibrate"), 26.0).on_hover_text(tool_tip(Tool::Calibrate)).clicked() {
+                        tool = Some(Tool::Calibrate);
+                    }
+                });
+            });
+            // The page's state, in one short line.
+            let (text, colour) = match &defined {
+                Some(scale) => {
+                    let ratio = ratio_of(1.0, scale.x * scale.distance_factor, &scale.unit).map(format_ratio).unwrap_or_else(|| scale.ratio.clone());
+                    (crate::i18n::fmt(tl!("Real measurements at {ratio}"), &[("ratio", &ratio)]), t.text_muted)
+                }
+                None => (tl!("Paper size — choose the scale").to_string(), orange),
+            };
+            ui.label(egui::RichText::new(text).font(crate::theme::regular(11.5)).color(colour));
+            if state.calibrated {
+                ui.label(egui::RichText::new(tl!("Type the real length of this dimension, then press Enter.")).font(crate::theme::regular(11.5)));
+                ui.horizontal(|ui| {
+                    let r = ui.add(egui::DragValue::new(&mut state.real_distance).range(0.000001..=1e12).speed(0.01));
+                    r.widget_info(|| egui::WidgetInfo::labeled(egui::WidgetType::DragValue, true, tl!("Real length")));
+                    ui.label(&state.unit);
+                    if r.lost_focus() || r.drag_stopped() {
+                        apply = true;
+                    }
+                });
             }
         });
-        ui.add_space(8.0);
-        let resp = crate::icons::button(ui, "sliders-horizontal", 26.0, false, tl!("Line thickness"));
-        egui::Popup::menu(&resp).close_behavior(egui::PopupCloseBehavior::CloseOnClickOutside).show(|ui| {
-            ui.set_min_width(180.0);
-            ui.label(egui::RichText::new(tl!("Line thickness")).font(crate::theme::semibold(12.0)));
-            let r = ui.add(egui::Slider::new(&mut style.width, 0.5..=12.0).step_by(0.5).suffix(" pt"));
-            if r.drag_stopped() || r.changed() && !r.dragged() {
-                restyle = Some((None, Some(style.width)));
+        ui.end_row();
+        // Unit and decimals: "m ▾  0.00 ▾".
+        label(ui, tl!("Unit"));
+        ui.add_enabled_ui(editable, |ui| {
+            ui.horizontal(|ui| {
+                let mut unit = state.unit.clone();
+                egui::ComboBox::from_id_salt("measure-unit").selected_text(unit.clone()).width(56.0).show_ui(ui, |ui| {
+                    for u in UNITS {
+                        ui.selectable_value(&mut unit, u.to_string(), u);
+                    }
+                });
+                if unit != state.unit {
+                    let n = ratio_of(state.drawing_points, state.real_distance, &state.unit);
+                    match (n, metres_per(&state.unit), metres_per(&unit)) {
+                        // Keep the ratio, so the plan reads the same in the new unit.
+                        (Some(n), _, _) if defined.is_some() => chosen = Some(n),
+                        (_, Some(from), Some(to)) => state.real_distance *= from / to,
+                        _ => {}
+                    }
+                    state.unit = unit;
+                    apply |= defined.is_some();
+                }
+                // Decimals shown in readings: 0, 0.0, 0.00 or 0.000.
+                let mut precision = state.precision;
+                let example = |p: u8| if p == 0 { "0".to_string() } else { format!("0.{}", "0".repeat(usize::from(p))) };
+                egui::ComboBox::from_id_salt("measure-decimals")
+                    .selected_text(example(precision))
+                    .width(64.0)
+                    .show_ui(ui, |ui| {
+                        for p in 0..=3u8 {
+                            ui.selectable_value(&mut precision, p, example(p));
+                        }
+                    })
+                    .response
+                    .on_hover_text(tl!("Decimals"));
+                if precision != state.precision {
+                    state.precision = precision;
+                    apply |= defined.is_some();
+                }
+            });
+        });
+        ui.end_row();
+        // Colour: the common swatches, the current one ringed; then the line thickness.
+        label(ui, tl!("Colour"));
+        ui.horizontal(|ui| {
+            let style = &mut app.comment_prefs.measure_style;
+            ui.spacing_mut().item_spacing.x = 2.0;
+            for name in ["Blue", "Red", "Green", "Orange", "Black"] {
+                let Some((_, c)) = crate::comments::SWATCHES.iter().find(|(n, _)| *n == name) else { continue };
+                let (r, resp) = ui.allocate_exact_size(egui::vec2(20.0, 20.0), egui::Sense::click());
+                let on = style.color.iter().zip(c).all(|(a, b)| (a - b).abs() < 0.005);
+                ui.painter().circle_filled(r.center(), 7.0, crate::comments::color32(*c));
+                if on {
+                    ui.painter().circle_stroke(r.center(), 9.5, Stroke::new(1.5, t.text));
+                } else if resp.hovered() {
+                    ui.painter().circle_stroke(r.center(), 9.5, Stroke::new(1.0, t.text_faint));
+                }
+                resp.widget_info(|| egui::WidgetInfo::selected(egui::WidgetType::Button, true, on, tl!(name)));
+                if crate::theme::hand(resp).on_hover_text(tl!(name)).clicked() {
+                    style.color = *c;
+                    restyle = Some((Some(*c), None));
+                }
+            }
+            ui.add_space(6.0);
+            let mut width = style.width;
+            egui::ComboBox::from_id_salt("measure-width")
+                .selected_text(format!("{} pt", width))
+                .width(48.0)
+                .show_ui(ui, |ui| {
+                    for w in WIDTHS {
+                        ui.selectable_value(&mut width, w, format!("{w} pt"));
+                    }
+                })
+                .response
+                .on_hover_text(tl!("Line thickness"));
+            if width != style.width {
+                style.width = width;
+                restyle = Some((None, Some(width)));
             }
         });
+        ui.end_row();
     });
+    if let Some(n) = chosen {
+        set_ratio(state, n);
+        apply = true;
+    }
     if let Some(error) = &state.error {
         ui.colored_label(Color32::from_rgb(190, 50, 50), error);
     }
-    ui.separator();
     // 4. Saved measurements.
     let mut select = None;
     let mut export = false;
     match state.listing.as_ref().map(|(_, l)| l) {
+        // Nothing saved yet: no section at all.
+        Some(Ok(listing)) if listing.measurements.is_empty() && listing.unsupported.is_empty() => {}
         None => {}
         Some(Ok(listing)) => {
+            ui.add_space(6.0);
             ui.horizontal(|ui| {
-                ui.label(egui::RichText::new(format!("{}: {}", tl!("Saved measurements"), listing.measurements.len())).strong());
+                let title = format!("{} ({})", crate::i18n::upper_label("Measurements"), listing.measurements.len());
+                ui.label(egui::RichText::new(title).font(crate::theme::semibold(10.5)).color(t.text_faint).extra_letter_spacing(0.6));
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                    let enabled = !listing.measurements.is_empty();
-                    if ui
-                        .add_enabled_ui(enabled, |ui| crate::icons::button(ui, "file-output", 26.0, false, tl!("Export measurements as CSV")))
-                        .inner
-                        .clicked()
-                    {
+                    if crate::icons::button(ui, "file-output", 24.0, false, tl!("Export measurements as CSV")).clicked() {
                         export = true;
                     }
                 });
@@ -562,7 +595,7 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, t: &Tokens) {
                 ui.colored_label(Color32::from_rgb(190, 120, 30), format!("{}: {}", tl!("Unsupported measurements"), listing.unsupported.len()))
                     .on_hover_text(reasons.join("\n"));
             }
-            egui::ScrollArea::vertical().id_salt("measurement-list").max_height(140.0).show(ui, |ui| {
+            egui::ScrollArea::vertical().id_salt("measurement-list").max_height(160.0).show(ui, |ui| {
                 for m in &listing.measurements {
                     let on = selected == Some((m.page, m.index));
                     let text = format!("{} {} · {} {}", tl!("Page"), m.page.saturating_add(1), m.reading.label, m.label);
@@ -700,6 +733,8 @@ fn scale_edit(state: &mut MeasureView, doc: &Document, page: usize, info: &pdfcr
 }
 /// Drawing scales offered in the panel: 1:1 to 1:1000, as on an architect's scale rule.
 const RATIOS: [f64; 8] = [1.0, 10.0, 20.0, 50.0, 100.0, 200.0, 500.0, 1000.0];
+/// Line widths offered for measurements, in points.
+const WIDTHS: [f64; 4] = [0.5, 1.0, 2.0, 3.0];
 /// Units offered for the plan scale.
 const UNITS: [&str; 3] = ["m", "cm", "mm"];
 /// A PDF point in metres: 1/72 inch, 0.352777… mm.
@@ -756,6 +791,10 @@ pub(crate) fn command(app: &mut PdfCraftApp, id: &str) {
     {
         app.views[index].measure.cancel();
         app.quick_tool = QuickTool::Measure(tool);
+    }
+    // Opening the panel (Drawing scale, Export…) picks Distance when no measure tool is in hand.
+    if !matches!(app.quick_tool, QuickTool::Measure(_)) {
+        app.quick_tool = QuickTool::Measure(Tool::Distance);
     }
     if id == "measure.export" {
         export_csv(app);

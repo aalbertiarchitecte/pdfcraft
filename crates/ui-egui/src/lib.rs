@@ -2141,6 +2141,10 @@ impl PdfCraftApp {
     pub(crate) fn select_tool(&mut self, id: &'static str) {
         self.left = LeftPanel::Tool(id);
         self.reveal_tools();
+        // Measure opens ready to measure: Distance, unless a measure tool is already in hand.
+        if id == "measure" && !matches!(self.quick_tool, QuickTool::Measure(_)) {
+            self.quick_tool = QuickTool::Measure(measure_ui::Tool::Distance);
+        }
         if let Some(view) = self.active.and_then(|i| self.views.get_mut(i)) {
             if id == "organize" {
                 view.open_organize();

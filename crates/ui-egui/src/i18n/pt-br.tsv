@@ -1740,6 +1740,11 @@
 	Export measurements	Exportar medições
 	Open a PDF to measure it.	Abra um PDF para medi-lo.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Clique nos vértices. Enter ou clique duplo finaliza um perímetro ou área. Clique no primeiro ponto para fechar uma área.
+	Calibrate	Calibrar
+	Common scales	Escalas comuns
+	Real measurements at {ratio}	Medidas reais na escala {ratio}
+	Paper size — choose the scale	Tamanho do papel — escolha a escala
+	Measurements	Medidas
 	metres	metros
 	centimetres	centímetros
 	millimetres	milímetros

@@ -372,6 +372,11 @@
 	Click the first point to begin.	Spustelėkite pirmąjį tašką, kad pradėtumėte.
 	Click to sort, drag to move the column. Drag its edge to resize it.	Spustelėkite, kad surikiuotumėte; vilkite stulpelį, kad jį perkeltumėte. Vilkite jo kraštą, kad pakeistumėte plotį.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Spustelėkite viršūnes. Paspauskite „Enter“ arba dukart spustelėkite, kad baigtumėte perimetrą ar plotą. Spustelėkite pirmąjį tašką, kad užvertumėte plotą.
+	Calibrate	Kalibruoti
+	Common scales	Įprasti masteliai
+	Real measurements at {ratio}	Tikri matmenys, mastelis {ratio}
+	Paper size — choose the scale	Popieriaus dydis — pasirinkite mastelį
+	Measurements	Matavimai
 	metres	metrais
 	centimetres	centimetrais
 	millimetres	milimetrais

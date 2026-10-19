@@ -1868,6 +1868,11 @@
 	Export measurements	Експортирай измерванията
 	Open a PDF to measure it.	Отворете PDF файл, за да го измервате.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Щракнете върху върховете. Enter или двукратно щракване завършва периметър или площ. Щракнете върху първата точка, за да затворите площ.
+	Calibrate	Калибриране
+	Common scales	Обичайни мащаби
+	Real measurements at {ratio}	Реални размери при мащаб {ratio}
+	Paper size — choose the scale	Размер на хартията — изберете мащаб
+	Measurements	Измервания
 	metres	метри
 	centimetres	сантиметри
 	millimetres	милиметри

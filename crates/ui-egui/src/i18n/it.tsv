@@ -2012,6 +2012,11 @@
 	Export measurements	Esporta misure
 	Open a PDF to measure it.	Apri un PDF per misurarlo.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Fai clic sui vertici. Invio o doppio clic termina un perimetro o un'area. Fai clic sul primo punto per chiudere un'area.
+	Calibrate	Calibra
+	Common scales	Scale comuni
+	Real measurements at {ratio}	Misure reali in scala {ratio}
+	Paper size — choose the scale	Dimensioni carta — scegli la scala
+	Measurements	Misure
 	metres	metri
 	centimetres	centimetri
 	millimetres	millimetri

@@ -2005,6 +2005,11 @@
 	Export measurements	تصدير القياسات
 	Open a PDF to measure it.	افتح ملف PDF لقياسه.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	انقر لوضع الرؤوس. Enter أو النقر المزدوج ينهي محيطًا أو مساحة. انقر النقطة الأولى لإغلاق مساحة.
+	Calibrate	معايرة
+	Common scales	مقاييس شائعة
+	Real measurements at {ratio}	قياسات حقيقية بمقياس {ratio}
+	Paper size — choose the scale	حجم الورق — اختر المقياس
+	Measurements	القياسات
 	metres	أمتار
 	centimetres	سنتيمترات
 	millimetres	مليمترات

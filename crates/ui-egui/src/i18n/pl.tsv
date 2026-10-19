@@ -1999,6 +1999,11 @@
 	Export measurements	Eksportuj pomiary
 	Open a PDF to measure it.	Otwórz PDF, aby wykonać pomiar.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Klikaj wierzchołki. Enter lub dwukrotne kliknięcie kończy pomiar obwodu lub pola. Kliknij pierwszy punkt, aby zamknąć obszar.
+	Calibrate	Kalibruj
+	Common scales	Typowe skale
+	Real measurements at {ratio}	Rzeczywiste wymiary w skali {ratio}
+	Paper size — choose the scale	Rozmiar papieru — wybierz skalę
+	Measurements	Pomiary
 	metres	metrach
 	centimetres	centymetrach
 	millimetres	milimetrach

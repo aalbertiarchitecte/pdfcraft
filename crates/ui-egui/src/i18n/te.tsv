@@ -1925,6 +1925,11 @@ action wizard	Start	ప్రారంభించు
 	Export measurements	కొలతలను ఎగుమతి చేయి
 	Open a PDF to measure it.	కొలవడానికి ఒక PDFను తెరవండి.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	శీర్షాలను క్లిక్ చేయండి. Enter నొక్కితే లేదా డబుల్-క్లిక్ చేస్తే చుట్టుకొలత లేదా వైశాల్యం పూర్తవుతుంది. వైశాల్యాన్ని మూసివేయడానికి మొదటి బిందువును క్లిక్ చేయండి.
+	Calibrate	కాలిబ్రేట్
+	Common scales	సాధారణ స్కేల్‌లు
+	Real measurements at {ratio}	{ratio} స్కేల్‌లో నిజమైన కొలతలు
+	Paper size — choose the scale	కాగితం పరిమాణం — స్కేల్‌ను ఎంచుకోండి
+	Measurements	కొలతలు
 	metres	మీటర్లు
 	centimetres	సెంటీమీటర్లు
 	millimetres	మిల్లీమీటర్లు

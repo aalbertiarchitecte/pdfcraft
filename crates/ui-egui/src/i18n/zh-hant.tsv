@@ -2006,6 +2006,11 @@
 	Export measurements	匯出測量結果
 	Open a PDF to measure it.	開啟 PDF 以進行測量。
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	按一下頂點。按 Enter 或按兩下以完成周長或面積測量。按一下起點以封閉區域。
+	Calibrate	校準
+	Common scales	常用比例
+	Real measurements at {ratio}	實際尺寸，比例 {ratio}
+	Paper size — choose the scale	紙面尺寸 — 請選擇比例
+	Measurements	測量
 	metres	公尺
 	centimetres	公分
 	millimetres	公釐

@@ -1926,6 +1926,11 @@
 	Export measurements	Mérések exportálása
 	Open a PDF to measure it.	Nyiss meg egy PDF-et a méréshez.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Kattints a csúcspontokra. Az Enter vagy a dupla kattintás lezárja a kerületet vagy a területet. Az első pontra kattintva zárod a területet.
+	Calibrate	Kalibrálás
+	Common scales	Gyakori méretarányok
+	Real measurements at {ratio}	Valós méretek, {ratio} méretarány
+	Paper size — choose the scale	Papírméret — válasszon méretarányt
+	Measurements	Mérések
 	metres	méterben
 	centimetres	centiméterben
 	millimetres	milliméterben

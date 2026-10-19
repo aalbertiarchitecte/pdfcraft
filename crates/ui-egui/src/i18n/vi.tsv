@@ -370,6 +370,11 @@ theme	Appearance	Giao diện
 	Click the first point to begin.	Bấm vào điểm đầu tiên để bắt đầu.
 	Click to sort, drag to move the column. Drag its edge to resize it.	Bấm để sắp xếp, kéo để di chuyển cột. Kéo cạnh cột để đổi kích thước.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Bấm vào các đỉnh. Nhấn Enter hoặc bấm đúp để kết thúc chu vi hoặc diện tích. Bấm vào điểm đầu tiên để đóng một vùng diện tích.
+	Calibrate	Hiệu chỉnh
+	Common scales	Tỷ lệ thường dùng
+	Real measurements at {ratio}	Số đo thực theo tỷ lệ {ratio}
+	Paper size — choose the scale	Kích thước giấy — hãy chọn tỷ lệ
+	Measurements	Số đo
 	metres	mét
 	centimetres	xentimét
 	millimetres	milimét

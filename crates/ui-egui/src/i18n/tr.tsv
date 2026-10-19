@@ -1901,6 +1901,11 @@
 	Export measurements	Ölçümleri dışa aktar
 	Open a PDF to measure it.	Ölçmek için bir PDF açın.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Köşelere tıklayın. Enter veya çift tıklama çevreyi veya alanı tamamlar. Bir alanı kapatmak için ilk noktaya tıklayın.
+	Calibrate	Kalibre et
+	Common scales	Yaygın ölçekler
+	Real measurements at {ratio}	{ratio} ölçeğinde gerçek ölçüler
+	Paper size — choose the scale	Kâğıt boyutu — ölçeği seçin
+	Measurements	Ölçümler
 	metres	metre
 	centimetres	santimetre
 	millimetres	milimetre

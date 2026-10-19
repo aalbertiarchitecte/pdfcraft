@@ -1941,6 +1941,11 @@
 	Export measurements	Messungen exportieren
 	Open a PDF to measure it.	Öffne ein PDF, um es zu messen.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Klicke Eckpunkte an. Enter oder Doppelklick schließt einen Umfang oder eine Fläche ab. Klicke auf den ersten Punkt, um eine Fläche zu schließen.
+	Calibrate	Kalibrieren
+	Common scales	Übliche Maßstäbe
+	Real measurements at {ratio}	Echte Maße im Maßstab {ratio}
+	Paper size — choose the scale	Papiergröße — Maßstab wählen
+	Measurements	Messungen
 	metres	Meter
 	centimetres	Zentimeter
 	millimetres	Millimeter

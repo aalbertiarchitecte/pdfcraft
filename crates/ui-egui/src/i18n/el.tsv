@@ -1414,6 +1414,11 @@
 	Export measurements	Εξαγωγή μετρήσεων
 	Open a PDF to measure it.	Ανοίξτε ένα PDF για να πραγματοποιήσετε μετρήσεις.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Κάντε κλικ στις κορυφές. Με Enter ή διπλό κλικ ολοκληρώνεται η περίμετρος ή το εμβαδόν. Κάντε κλικ στο πρώτο σημείο για να κλείσετε την περιοχή.
+	Calibrate	Βαθμονόμηση
+	Common scales	Συνήθεις κλίμακες
+	Real measurements at {ratio}	Πραγματικές μετρήσεις σε κλίμακα {ratio}
+	Paper size — choose the scale	Μέγεθος χαρτιού — επιλέξτε κλίμακα
+	Measurements	Μετρήσεις
 	metres	μέτρα
 	centimetres	εκατοστά
 	millimetres	χιλιοστά

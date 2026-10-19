@@ -1936,6 +1936,11 @@
 	Export measurements	Exporter les mesures
 	Open a PDF to measure it.	Ouvrez un PDF pour le mesurer.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Cliquez sur les sommets. Entrée ou un double-clic termine un périmètre ou une aire. Cliquez sur le premier point pour fermer une aire.
+	Calibrate	Étalonner
+	Common scales	Échelles courantes
+	Real measurements at {ratio}	Mesures réelles au {ratio}
+	Paper size — choose the scale	Taille papier — choisissez l'échelle
+	Measurements	Mesures
 	metres	mètres
 	centimetres	centimètres
 	millimetres	millimètres

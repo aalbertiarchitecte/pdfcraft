@@ -2052,6 +2052,11 @@ key	Space	Mezerník
 	Export measurements	Exportovat měření
 	Open a PDF to measure it.	Otevřete PDF, které chcete měřit.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Klikejte na vrcholy. Enter nebo dvojité kliknutí dokončí obvod či plochu. Kliknutím na první bod plochu uzavřete.
+	Calibrate	Kalibrovat
+	Common scales	Běžná měřítka
+	Real measurements at {ratio}	Skutečné míry v měřítku {ratio}
+	Paper size — choose the scale	Velikost papíru — zvolte měřítko
+	Measurements	Míry
 	metres	metrech
 	centimetres	centimetrech
 	millimetres	milimetrech
