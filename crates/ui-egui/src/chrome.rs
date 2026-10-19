@@ -706,6 +706,15 @@ pub fn right_rail(app: &mut PdfCraftApp, ui: &mut egui::Ui) {
                     view.fit = if view.fit == Fit::Width { Fit::Page } else { Fit::Width };
                     view.goto = Some((view.current, 0.0));
                 }
+                // Below the zoom field (this layout runs bottom-up): same path as typing "100" in it.
+                let one_to_one = egui::Button::new(egui::RichText::new("1:1").font(theme::medium(11.0)).color(t.text_muted))
+                    .frame(false)
+                    .min_size(vec2(32.0, 18.0));
+                if ui.add(one_to_one).on_hover_text(tl!("Zoom 100 % (1:1)")).clicked()
+                    && let Some(zoom) = DocView::parse_zoom_percent("100")
+                {
+                    view.set_zoom(zoom);
+                }
                 let id = egui::Id::new("zoom-input");
                 let draft = id.with("draft");
                 let mut typed = ui.data(|d| d.get_temp::<String>(draft)).unwrap_or_else(|| format!("{:.0}%", view.zoom * 100.0));
