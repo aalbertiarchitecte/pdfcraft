@@ -4698,6 +4698,19 @@ fn quick_bar(app: &mut PdfCraftApp, area: Rect, ui: &mut egui::Ui) {
                             }
                         }
                     }
+                    // Measure's tools, while its panel is open or one of them is in use.
+                    let measuring = matches!(app.quick_tool, QuickTool::Measure(_));
+                    if measuring || app.left_open && app.left == crate::LeftPanel::Tool("measure") {
+                        let (r, _) = ui.allocate_exact_size(vec2(32.0, 9.0), Sense::hover());
+                        ui.painter().hline(r.x_range().shrink(6.0), r.center().y, Stroke::new(1.0, t.divider));
+                        for (label, icon, tool) in crate::measure_ui::TOOLS {
+                            if icons::button(ui, icon, 32.0, app.quick_tool == QuickTool::Measure(tool), tl!(label)).clicked() {
+                                app.execute(&format!("measure.{}", tool.name()));
+                            }
+                        }
+                        let (r, _) = ui.allocate_exact_size(vec2(32.0, 9.0), Sense::hover());
+                        ui.painter().hline(r.x_range().shrink(6.0), r.center().y, Stroke::new(1.0, t.divider));
+                    }
                     // Fill & Sign ▸ (text, marks, date, signature).
                     let current_fill = match app.quick_tool {
                         QuickTool::Fill(f) => Some(f),

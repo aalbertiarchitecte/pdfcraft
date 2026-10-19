@@ -1929,6 +1929,21 @@
 	Export measurements	Өлшемдерді экспорттау
 	Open a PDF to measure it.	Өлшеу үшін PDF құжатын ашыңыз.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Шыңдарды шертіңіз. Enter немесе қос шерту периметр мен ауданды аяқтайды. Ауданды жабу үшін бірінші нүктені шертіңіз.
+	metres	метр
+	centimetres	сантиметр
+	millimetres	миллиметр
+	Plan scale	Сызба масштабы
+	Measurements are in real {unit} at {ratio}.	Өлшемдер {ratio} масштабында нақты {unit} бойынша.
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	Масштаб жоқ: өлшемдер қағаз өлшемінде ({unit}). Сызба масштабын таңдаңыз.
+	Type the real length of this dimension, then press Enter.	Осы өлшемнің нақты ұзындығын енгізіп, Enter басыңыз.
+	Real length	Нақты ұзындық
+	Calibrate on a known dimension	Белгілі өлшем бойынша калибрлеу
+	Click both ends of a dimension you know, then type its real length.	Белгілі өлшемнің екі ұшын басып, нақты ұзындығын енгізіңіз.
+	1. Choose the plan scale. 2. Click two points.	1. Сызба масштабын таңдаңыз. 2. Екі нүктені басыңыз.
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. Сызба масштабын таңдаңыз. 2. Әр бұрышты басып, Enter немесе екі рет басыңыз.
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. Сызба масштабын таңдаңыз. 2. Әр бұрышты, жабу үшін бірінші нүктені басыңыз.
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. Белгілі өлшемнің екі ұшын басыңыз. 2. Нақты ұзындықты енгізіп, Enter басыңыз.
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. Сызба масштабын таңдаңыз. 2. Құралды таңдап, сызбаны басыңыз.
 	Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels.	Shift бұрышты 45 градусқа шектейді. Backspace шыңды алып тастайды. Escape — бас тарту.
 	Angle	Бұрыш
 	Click the first point to begin.	Бастау үшін бірінші нүктені шертіңіз.

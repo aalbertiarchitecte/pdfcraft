@@ -370,6 +370,21 @@ theme	Appearance	Giao diện
 	Click the first point to begin.	Bấm vào điểm đầu tiên để bắt đầu.
 	Click to sort, drag to move the column. Drag its edge to resize it.	Bấm để sắp xếp, kéo để di chuyển cột. Kéo cạnh cột để đổi kích thước.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Bấm vào các đỉnh. Nhấn Enter hoặc bấm đúp để kết thúc chu vi hoặc diện tích. Bấm vào điểm đầu tiên để đóng một vùng diện tích.
+	metres	mét
+	centimetres	xentimét
+	millimetres	milimét
+	Plan scale	Tỷ lệ bản vẽ
+	Measurements are in real {unit} at {ratio}.	Số đo là {unit} thực theo tỷ lệ {ratio}.
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	Chưa có tỷ lệ: số đo theo kích thước giấy ({unit}). Hãy chọn tỷ lệ bản vẽ.
+	Type the real length of this dimension, then press Enter.	Nhập chiều dài thực của kích thước này rồi nhấn Enter.
+	Real length	Chiều dài thực
+	Calibrate on a known dimension	Hiệu chỉnh theo kích thước đã biết
+	Click both ends of a dimension you know, then type its real length.	Bấm hai đầu của một kích thước đã biết, rồi nhập chiều dài thực của nó.
+	1. Choose the plan scale. 2. Click two points.	1. Chọn tỷ lệ bản vẽ. 2. Bấm hai điểm.
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. Chọn tỷ lệ bản vẽ. 2. Bấm từng góc, rồi nhấn Enter hoặc bấm đúp.
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. Chọn tỷ lệ bản vẽ. 2. Bấm từng góc, rồi bấm điểm đầu tiên để khép.
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. Bấm hai đầu của một kích thước đã biết. 2. Nhập chiều dài thực rồi nhấn Enter.
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. Chọn tỷ lệ bản vẽ. 2. Chọn công cụ rồi bấm lên bản vẽ.
 	Clockwise 90 degrees	Theo chiều kim đồng hồ 90 độ
 	Close (Esc)	Đóng (Esc)
 	Close Tab	Đóng thẻ

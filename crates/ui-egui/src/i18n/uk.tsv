@@ -2003,6 +2003,21 @@
 	Export measurements	Експортувати вимірювання
 	Open a PDF to measure it.	Відкрийте PDF для вимірювання.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Клацайте вершини. Enter або подвійне клацання завершує периметр чи площу. Клацніть першу точку, щоб замкнути область.
+	metres	метрах
+	centimetres	сантиметрах
+	millimetres	міліметрах
+	Plan scale	Масштаб креслення
+	Measurements are in real {unit} at {ratio}.	Виміри в реальних {unit}, масштаб {ratio}.
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	Масштаб не задано: виміри в розмірі паперу ({unit}). Виберіть масштаб креслення.
+	Type the real length of this dimension, then press Enter.	Введіть реальну довжину цього розміру й натисніть Enter.
+	Real length	Реальна довжина
+	Calibrate on a known dimension	Калібрувати за відомим розміром
+	Click both ends of a dimension you know, then type its real length.	Клацніть обидва кінці відомого розміру, потім введіть його реальну довжину.
+	1. Choose the plan scale. 2. Click two points.	1. Виберіть масштаб креслення. 2. Клацніть дві точки.
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. Виберіть масштаб креслення. 2. Клацніть кожен кут, потім Enter або подвійне клацання.
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. Виберіть масштаб креслення. 2. Клацніть кожен кут, потім першу точку, щоб замкнути.
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. Клацніть обидва кінці відомого розміру. 2. Введіть реальну довжину й натисніть Enter.
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. Виберіть масштаб креслення. 2. Виберіть інструмент і клацніть на кресленні.
 	Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels.	Shift обмежує кут до 45 градусів. Backspace видаляє вершину. Escape скасовує.
 	Angle	Кут
 	Click the first point to begin.	Клацніть першу точку, щоб почати.

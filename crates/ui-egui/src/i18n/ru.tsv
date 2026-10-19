@@ -2006,6 +2006,21 @@
 	Export measurements	Экспортировать измерения
 	Open a PDF to measure it.	Откройте PDF для измерения.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Щёлкайте вершины. Enter или двойной щелчок завершает периметр или площадь. Щёлкните первую точку, чтобы замкнуть площадь.
+	metres	метрах
+	centimetres	сантиметрах
+	millimetres	миллиметрах
+	Plan scale	Масштаб чертежа
+	Measurements are in real {unit} at {ratio}.	Измерения в реальных {unit}, масштаб {ratio}.
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	Масштаб не задан: измерения в размере бумаги ({unit}). Выберите масштаб чертежа.
+	Type the real length of this dimension, then press Enter.	Введите реальную длину этого размера и нажмите Enter.
+	Real length	Реальная длина
+	Calibrate on a known dimension	Калибровать по известному размеру
+	Click both ends of a dimension you know, then type its real length.	Щёлкните оба конца известного размера, затем введите его реальную длину.
+	1. Choose the plan scale. 2. Click two points.	1. Выберите масштаб чертежа. 2. Щёлкните две точки.
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. Выберите масштаб чертежа. 2. Щёлкните каждый угол, затем Enter или двойной щелчок.
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. Выберите масштаб чертежа. 2. Щёлкните каждый угол, затем первую точку, чтобы замкнуть.
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. Щёлкните оба конца известного размера. 2. Введите реальную длину и нажмите Enter.
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. Выберите масштаб чертежа. 2. Выберите инструмент и щёлкните на чертеже.
 	Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels.	Shift ограничивает до 45 градусов. Backspace удаляет вершину. Escape отменяет.
 	Angle	Угол
 	Click the first point to begin.	Щёлкните первую точку, чтобы начать.

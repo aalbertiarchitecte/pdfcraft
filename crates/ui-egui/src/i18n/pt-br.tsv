@@ -1740,6 +1740,21 @@
 	Export measurements	Exportar medições
 	Open a PDF to measure it.	Abra um PDF para medi-lo.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Clique nos vértices. Enter ou clique duplo finaliza um perímetro ou área. Clique no primeiro ponto para fechar uma área.
+	metres	metros
+	centimetres	centímetros
+	millimetres	milímetros
+	Plan scale	Escala da planta
+	Measurements are in real {unit} at {ratio}.	As medidas estão em {unit} reais na escala {ratio}.
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	Sem escala: as medidas estão no tamanho do papel ({unit}). Escolha a escala da planta.
+	Type the real length of this dimension, then press Enter.	Digite o comprimento real desta cota e pressione Enter.
+	Real length	Comprimento real
+	Calibrate on a known dimension	Calibrar por uma cota conhecida
+	Click both ends of a dimension you know, then type its real length.	Clique nas duas extremidades de uma cota conhecida e digite o comprimento real.
+	1. Choose the plan scale. 2. Click two points.	1. Escolha a escala da planta. 2. Clique em dois pontos.
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. Escolha a escala da planta. 2. Clique em cada canto e pressione Enter ou clique duas vezes.
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. Escolha a escala da planta. 2. Clique em cada canto e no primeiro ponto para fechar.
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. Clique nas duas extremidades de uma cota conhecida. 2. Digite o comprimento real e pressione Enter.
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. Escolha a escala da planta. 2. Escolha uma ferramenta e clique na planta.
 	Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels.	Shift restringe a 45 graus. Backspace remove um vértice. Escape cancela.
 	Angle	Ângulo
 	Click the first point to begin.	Clique no primeiro ponto para começar.

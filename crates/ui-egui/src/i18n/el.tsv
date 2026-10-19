@@ -1414,6 +1414,21 @@
 	Export measurements	Εξαγωγή μετρήσεων
 	Open a PDF to measure it.	Ανοίξτε ένα PDF για να πραγματοποιήσετε μετρήσεις.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Κάντε κλικ στις κορυφές. Με Enter ή διπλό κλικ ολοκληρώνεται η περίμετρος ή το εμβαδόν. Κάντε κλικ στο πρώτο σημείο για να κλείσετε την περιοχή.
+	metres	μέτρα
+	centimetres	εκατοστά
+	millimetres	χιλιοστά
+	Plan scale	Κλίμακα σχεδίου
+	Measurements are in real {unit} at {ratio}.	Οι μετρήσεις είναι σε πραγματικά {unit} σε κλίμακα {ratio}.
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	Χωρίς κλίμακα: οι μετρήσεις είναι σε μέγεθος χαρτιού ({unit}). Επιλέξτε την κλίμακα του σχεδίου.
+	Type the real length of this dimension, then press Enter.	Πληκτρολογήστε το πραγματικό μήκος αυτής της διάστασης και πατήστε Enter.
+	Real length	Πραγματικό μήκος
+	Calibrate on a known dimension	Βαθμονόμηση σε γνωστή διάσταση
+	Click both ends of a dimension you know, then type its real length.	Κάντε κλικ στα δύο άκρα μιας γνωστής διάστασης και πληκτρολογήστε το πραγματικό μήκος της.
+	1. Choose the plan scale. 2. Click two points.	1. Επιλέξτε την κλίμακα του σχεδίου. 2. Κάντε κλικ σε δύο σημεία.
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. Επιλέξτε την κλίμακα του σχεδίου. 2. Κάντε κλικ σε κάθε γωνία και πατήστε Enter ή διπλό κλικ.
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. Επιλέξτε την κλίμακα του σχεδίου. 2. Κάντε κλικ σε κάθε γωνία και στο πρώτο σημείο για κλείσιμο.
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. Κάντε κλικ στα δύο άκρα μιας γνωστής διάστασης. 2. Πληκτρολογήστε το πραγματικό μήκος και πατήστε Enter.
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. Επιλέξτε την κλίμακα του σχεδίου. 2. Επιλέξτε εργαλείο και κάντε κλικ στο σχέδιο.
 	Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels.	Το Shift περιορίζει τις γωνίες σε βήματα των 45 μοιρών. Το Backspace αφαιρεί μια κορυφή. Το Escape ακυρώνει.
 	Click the first point to begin.	Κάντε κλικ στο πρώτο σημείο για να ξεκινήσετε.
 	Snap to drawing	Προσκόλληση στο σχέδιο

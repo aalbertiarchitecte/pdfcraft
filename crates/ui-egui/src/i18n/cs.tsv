@@ -2052,6 +2052,21 @@ key	Space	Mezerník
 	Export measurements	Exportovat měření
 	Open a PDF to measure it.	Otevřete PDF, které chcete měřit.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Klikejte na vrcholy. Enter nebo dvojité kliknutí dokončí obvod či plochu. Kliknutím na první bod plochu uzavřete.
+	metres	metrech
+	centimetres	centimetrech
+	millimetres	milimetrech
+	Plan scale	Měřítko výkresu
+	Measurements are in real {unit} at {ratio}.	Míry jsou ve skutečných {unit} v měřítku {ratio}.
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	Bez měřítka: míry jsou ve velikosti papíru ({unit}). Zvolte měřítko výkresu.
+	Type the real length of this dimension, then press Enter.	Zadejte skutečnou délku této kóty a stiskněte Enter.
+	Real length	Skutečná délka
+	Calibrate on a known dimension	Kalibrovat podle známé kóty
+	Click both ends of a dimension you know, then type its real length.	Klikněte na oba konce známé kóty a zadejte její skutečnou délku.
+	1. Choose the plan scale. 2. Click two points.	1. Zvolte měřítko výkresu. 2. Klikněte na dva body.
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. Zvolte měřítko výkresu. 2. Klikněte na každý roh, pak Enter nebo dvojklik.
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. Zvolte měřítko výkresu. 2. Klikněte na každý roh, pak na první bod pro uzavření.
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. Klikněte na oba konce známé kóty. 2. Zadejte skutečnou délku a stiskněte Enter.
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. Zvolte měřítko výkresu. 2. Vyberte nástroj a klikněte do výkresu.
 	Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels.	Shift omezí směr na násobky 45 stupňů. Backspace odebere vrchol. Escape měření zruší.
 	Angle	Úhel
 	Click the first point to begin.	Začněte kliknutím na první bod.

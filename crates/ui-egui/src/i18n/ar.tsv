@@ -2005,6 +2005,21 @@
 	Export measurements	تصدير القياسات
 	Open a PDF to measure it.	افتح ملف PDF لقياسه.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	انقر لوضع الرؤوس. Enter أو النقر المزدوج ينهي محيطًا أو مساحة. انقر النقطة الأولى لإغلاق مساحة.
+	metres	أمتار
+	centimetres	سنتيمترات
+	millimetres	مليمترات
+	Plan scale	مقياس الرسم
+	Measurements are in real {unit} at {ratio}.	القياسات بوحدة {unit} حقيقية بمقياس {ratio}.
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	لا يوجد مقياس: القياسات بحجم الورق ({unit}). اختر مقياس الرسم.
+	Type the real length of this dimension, then press Enter.	اكتب الطول الحقيقي لهذا البُعد ثم اضغط Enter.
+	Real length	الطول الحقيقي
+	Calibrate on a known dimension	معايرة على بُعد معروف
+	Click both ends of a dimension you know, then type its real length.	انقر طرفي بُعد معروف، ثم اكتب طوله الحقيقي.
+	1. Choose the plan scale. 2. Click two points.	1. اختر مقياس الرسم. 2. انقر نقطتين.
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. اختر مقياس الرسم. 2. انقر كل زاوية، ثم Enter أو انقر نقرًا مزدوجًا.
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. اختر مقياس الرسم. 2. انقر كل زاوية، ثم النقطة الأولى للإغلاق.
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. انقر طرفي بُعد معروف. 2. اكتب طوله الحقيقي واضغط Enter.
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. اختر مقياس الرسم. 2. اختر أداة وانقر على الرسم.
 	Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels.	Shift يقيّد الزاوية بمضاعفات 45 درجة. Backspace يزيل رأسًا. Escape يلغي.
 	Angle	الزاوية
 	Click the first point to begin.	انقر النقطة الأولى للبدء.

@@ -2019,6 +2019,21 @@
 	Export measurements	測定結果を書き出す
 	Open a PDF to measure it.	測定するPDFを開いてください。
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	頂点をクリックします。Enterまたはダブルクリックで周長や面積の測定を終了します。最初の点をクリックすると面積を閉じます。
+	metres	メートル
+	centimetres	センチメートル
+	millimetres	ミリメートル
+	Plan scale	図面の縮尺
+	Measurements are in real {unit} at {ratio}.	測定値は縮尺 {ratio} の実寸（{unit}）です。
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	縮尺なし：測定値は用紙上の寸法（{unit}）です。図面の縮尺を選んでください。
+	Type the real length of this dimension, then press Enter.	この寸法の実際の長さを入力し、Enter キーを押してください。
+	Real length	実際の長さ
+	Calibrate on a known dimension	既知の寸法で校正
+	Click both ends of a dimension you know, then type its real length.	既知の寸法の両端をクリックし、実際の長さを入力します。
+	1. Choose the plan scale. 2. Click two points.	1. 図面の縮尺を選ぶ。2. 2 点をクリック。
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. 図面の縮尺を選ぶ。2. 各頂点をクリックし、Enter またはダブルクリック。
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. 図面の縮尺を選ぶ。2. 各頂点をクリックし、最初の点をクリックして閉じる。
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. 既知の寸法の両端をクリック。2. 実際の長さを入力して Enter キー。
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. 図面の縮尺を選ぶ。2. ツールを選んで図面をクリック。
 	Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels.	Shiftで45度刻みに制限します。Backspaceで頂点を削除し、Escapeで取り消します。
 	Angle	角度
 	Click the first point to begin.	最初の点をクリックして開始します。

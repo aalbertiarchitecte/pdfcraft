@@ -1901,6 +1901,21 @@
 	Export measurements	Ölçümleri dışa aktar
 	Open a PDF to measure it.	Ölçmek için bir PDF açın.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Köşelere tıklayın. Enter veya çift tıklama çevreyi veya alanı tamamlar. Bir alanı kapatmak için ilk noktaya tıklayın.
+	metres	metre
+	centimetres	santimetre
+	millimetres	milimetre
+	Plan scale	Çizim ölçeği
+	Measurements are in real {unit} at {ratio}.	Ölçümler {ratio} ölçeğinde gerçek {unit} cinsindendir.
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	Ölçek yok: ölçümler kâğıt boyutunda ({unit}). Çizim ölçeğini seçin.
+	Type the real length of this dimension, then press Enter.	Bu ölçünün gerçek uzunluğunu yazın ve Enter tuşuna basın.
+	Real length	Gerçek uzunluk
+	Calibrate on a known dimension	Bilinen bir ölçüyle kalibre et
+	Click both ends of a dimension you know, then type its real length.	Bilinen bir ölçünün iki ucuna tıklayın, ardından gerçek uzunluğunu yazın.
+	1. Choose the plan scale. 2. Click two points.	1. Çizim ölçeğini seçin. 2. İki noktaya tıklayın.
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. Çizim ölçeğini seçin. 2. Her köşeye tıklayın, ardından Enter veya çift tıklama.
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. Çizim ölçeğini seçin. 2. Her köşeye tıklayın, kapatmak için ilk noktaya tıklayın.
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. Bilinen bir ölçünün iki ucuna tıklayın. 2. Gerçek uzunluğu yazıp Enter tuşuna basın.
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. Çizim ölçeğini seçin. 2. Bir araç seçip çizime tıklayın.
 	Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels.	Shift 45 dereceye sabitler. Geri alma tuşu bir köşeyi kaldırır. Escape iptal eder.
 	Angle	Açı
 	Click the first point to begin.	Başlamak için ilk noktaya tıklayın.

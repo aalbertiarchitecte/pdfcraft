@@ -561,6 +561,11 @@ impl Document {
         let e = self.editor.as_ref().ok_or("the document can't be read")?;
         measure::scale_at_or(&e.cos, page, at, per_point, unit).map_err(|e| e.to_string())
     }
+    /// The scale the page sets at `at`, or `None` where it sets none (measurements are then paper size).
+    pub fn measurement_viewport_scale(&self, page: usize, at: measure::Point) -> Result<Option<measure::Scale>, String> {
+        let e = self.editor.as_ref().ok_or("the document can't be read")?;
+        measure::viewport_scale(&e.cos, page, at).map_err(|e| e.to_string())
+    }
     pub fn measurement_to_user(&self, page: usize, point: measure::Point) -> Result<measure::Point, String> {
         let e = self.editor.as_ref().ok_or("the document can't be read")?;
         measure::view_to_user(&e.cos, page, point).map_err(|e| e.to_string())

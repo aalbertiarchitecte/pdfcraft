@@ -1941,6 +1941,21 @@
 	Export measurements	Messungen exportieren
 	Open a PDF to measure it.	Öffne ein PDF, um es zu messen.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Klicke Eckpunkte an. Enter oder Doppelklick schließt einen Umfang oder eine Fläche ab. Klicke auf den ersten Punkt, um eine Fläche zu schließen.
+	metres	Meter
+	centimetres	Zentimeter
+	millimetres	Millimeter
+	Plan scale	Planmaßstab
+	Measurements are in real {unit} at {ratio}.	Messungen sind in echten {unit} im Maßstab {ratio}.
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	Kein Maßstab: Messungen in Papiergröße ({unit}). Wählen Sie den Planmaßstab.
+	Type the real length of this dimension, then press Enter.	Geben Sie die echte Länge dieses Maßes ein und drücken Sie die Eingabetaste.
+	Real length	Echte Länge
+	Calibrate on a known dimension	An bekanntem Maß kalibrieren
+	Click both ends of a dimension you know, then type its real length.	Klicken Sie auf beide Enden eines bekannten Maßes und geben Sie dann seine echte Länge ein.
+	1. Choose the plan scale. 2. Click two points.	1. Planmaßstab wählen. 2. Zwei Punkte anklicken.
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. Planmaßstab wählen. 2. Jede Ecke anklicken, dann Eingabetaste oder Doppelklick.
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. Planmaßstab wählen. 2. Jede Ecke anklicken, dann zum Schließen den ersten Punkt.
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. Beide Enden eines bekannten Maßes anklicken. 2. Echte Länge eingeben und Eingabetaste drücken.
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. Planmaßstab wählen. 2. Werkzeug wählen und in den Plan klicken.
 	Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels.	Shift beschränkt auf 45 Grad. Rücktaste entfernt einen Eckpunkt. Escape bricht ab.
 	Angle	Winkel
 	Click the first point to begin.	Klicke, um den ersten Punkt zu setzen.

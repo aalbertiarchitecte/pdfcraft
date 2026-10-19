@@ -1868,6 +1868,21 @@
 	Export measurements	Експортирай измерванията
 	Open a PDF to measure it.	Отворете PDF файл, за да го измервате.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Щракнете върху върховете. Enter или двукратно щракване завършва периметър или площ. Щракнете върху първата точка, за да затворите площ.
+	metres	метри
+	centimetres	сантиметри
+	millimetres	милиметри
+	Plan scale	Мащаб на чертежа
+	Measurements are in real {unit} at {ratio}.	Измерванията са в реални {unit} при мащаб {ratio}.
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	Няма мащаб: измерванията са в размер на хартията ({unit}). Изберете мащаба на чертежа.
+	Type the real length of this dimension, then press Enter.	Въведете реалната дължина на този размер и натиснете Enter.
+	Real length	Реална дължина
+	Calibrate on a known dimension	Калибриране по известен размер
+	Click both ends of a dimension you know, then type its real length.	Щракнете двата края на известен размер, след това въведете реалната му дължина.
+	1. Choose the plan scale. 2. Click two points.	1. Изберете мащаба на чертежа. 2. Щракнете две точки.
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. Изберете мащаба на чертежа. 2. Щракнете всеки ъгъл, после Enter или двойно щракване.
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. Изберете мащаба на чертежа. 2. Щракнете всеки ъгъл, после първата точка, за да затворите.
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. Щракнете двата края на известен размер. 2. Въведете реалната дължина и натиснете Enter.
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. Изберете мащаба на чертежа. 2. Изберете инструмент и щракнете върху чертежа.
 	Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels.	Shift ограничава до 45 градуса. Backspace премахва връх. Escape отменя.
 	Angle	Ъгъл
 	Click the first point to begin.	Щракнете върху първата точка, за да започнете.

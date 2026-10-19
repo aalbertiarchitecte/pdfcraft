@@ -1243,6 +1243,9 @@ fn measurement_tools_draw_live_calibrate_save_and_export() {
     h.state_mut().views[0].measure.drawing_points = 10.0;
     h.state_mut().views[0].measure.real_distance = 1.0;
     h.state_mut().views[0].measure.unit = "m".into();
+    // Raw fields are Advanced (folded): open it, then Apply scale.
+    h.get_by_label("ADVANCED").click();
+    h.run_steps(3);
     h.get_by_label("Apply scale").click();
     h.run_steps(3);
     let scale = h.state().session.get(doc).unwrap().measurement_scale(0, [20.0, 20.0]).unwrap();
@@ -1287,6 +1290,42 @@ fn measurement_tools_draw_live_calibrate_save_and_export() {
     click(&mut h, &c, 130.0, 50.0);
     assert!((h.state().views[0].measure.drawing_points - 100.0).abs() < 0.01);
     let _ = std::fs::remove_dir_all(dir);
+}
+
+#[test]
+fn choosing_a_plan_scale_applies_it_at_once() {
+    let (mut h, c) = harness_pages(1);
+    let doc = h.state().views[0].id;
+    ok(&mut h, &c, "ui.command", json!({"id":"measure.distance"}));
+    h.run_steps(3);
+    // No scale yet: paper size.
+    assert!(h.state().session.get(doc).unwrap().measurement_viewport_scale(0, [100.0, 150.0]).unwrap().is_none());
+    // A combo box shows its choice as its value.
+    let combo = |h: &mut Harness<'static, PdfCraftApp>, value: &str| {
+        h.get_by(|n| n.role() == egui::accesskit::Role::ComboBox && n.value().is_some_and(|v| v == value)).click();
+        h.run_steps(2);
+    };
+    combo(&mut h, "—");
+    h.get_by_label("1:200").click();
+    h.run_steps(3);
+    let d = h.state().session.get(doc).unwrap();
+    let scale = d.measurement_viewport_scale(0, [100.0, 150.0]).unwrap().expect("1:200 is set on the page without Apply");
+    assert_eq!((scale.unit.as_str(), scale.ratio.as_str()), ("m", "1:200"));
+    // 64.5 mm of paper at 1:200 is 12.90 m.
+    let paper = 64.5 / 25.4 * 72.0;
+    let reading = pdfcraft_engine::measure::reading(pdfcraft_engine::measure::Kind::Distance, &[[20.0, 20.0], [20.0 + paper, 20.0]], &scale).unwrap();
+    assert_eq!(reading.label, "12.90 m");
+    // Choosing the same scale again adds nothing; another unit keeps the ratio.
+    let n = d.edit_generation();
+    combo(&mut h, "1:200");
+    h.get_by(|n| n.role() != egui::accesskit::Role::ComboBox && n.label().is_some_and(|l| l == "1:200")).click();
+    h.run_steps(3);
+    assert_eq!(h.state().session.get(doc).unwrap().edit_generation(), n);
+    combo(&mut h, "m");
+    h.get_by_label("cm").click();
+    h.run_steps(3);
+    let scale = h.state().session.get(doc).unwrap().measurement_viewport_scale(0, [100.0, 150.0]).unwrap().unwrap();
+    assert_eq!((scale.unit.as_str(), scale.ratio.as_str()), ("cm", "1:200"));
 }
 
 #[test]

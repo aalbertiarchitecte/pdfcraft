@@ -372,6 +372,21 @@
 	Click the first point to begin.	Spustelėkite pirmąjį tašką, kad pradėtumėte.
 	Click to sort, drag to move the column. Drag its edge to resize it.	Spustelėkite, kad surikiuotumėte; vilkite stulpelį, kad jį perkeltumėte. Vilkite jo kraštą, kad pakeistumėte plotį.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Spustelėkite viršūnes. Paspauskite „Enter“ arba dukart spustelėkite, kad baigtumėte perimetrą ar plotą. Spustelėkite pirmąjį tašką, kad užvertumėte plotą.
+	metres	metrais
+	centimetres	centimetrais
+	millimetres	milimetrais
+	Plan scale	Brėžinio mastelis
+	Measurements are in real {unit} at {ratio}.	Matavimai yra tikrais {unit}, mastelis {ratio}.
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	Mastelio nėra: matavimai popieriaus dydžiu ({unit}). Pasirinkite brėžinio mastelį.
+	Type the real length of this dimension, then press Enter.	Įveskite tikrąjį šio matmens ilgį ir paspauskite Enter.
+	Real length	Tikrasis ilgis
+	Calibrate on a known dimension	Kalibruoti pagal žinomą matmenį
+	Click both ends of a dimension you know, then type its real length.	Spustelėkite abu žinomo matmens galus, tada įveskite jo tikrąjį ilgį.
+	1. Choose the plan scale. 2. Click two points.	1. Pasirinkite brėžinio mastelį. 2. Spustelėkite du taškus.
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. Pasirinkite brėžinio mastelį. 2. Spustelėkite kiekvieną kampą, tada Enter arba dukart.
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. Pasirinkite brėžinio mastelį. 2. Spustelėkite kiekvieną kampą, tada pirmą tašką uždarymui.
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. Spustelėkite abu žinomo matmens galus. 2. Įveskite tikrąjį ilgį ir paspauskite Enter.
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. Pasirinkite brėžinio mastelį. 2. Pasirinkite įrankį ir spustelėkite brėžinyje.
 	Clockwise 90 degrees	90 laipsnių pagal laikrodžio rodyklę
 	Close (Esc)	Užverti (Esc)
 	Close Tab	Užverti kortelę

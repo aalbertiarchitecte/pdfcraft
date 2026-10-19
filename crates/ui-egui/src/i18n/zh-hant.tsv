@@ -2006,6 +2006,21 @@
 	Export measurements	匯出測量結果
 	Open a PDF to measure it.	開啟 PDF 以進行測量。
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	按一下頂點。按 Enter 或按兩下以完成周長或面積測量。按一下起點以封閉區域。
+	metres	公尺
+	centimetres	公分
+	millimetres	公釐
+	Plan scale	圖紙比例
+	Measurements are in real {unit} at {ratio}.	測量值為比例 {ratio} 下的實際{unit}。
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	未設定比例：測量值為紙面尺寸（{unit}）。請選擇圖紙比例。
+	Type the real length of this dimension, then press Enter.	輸入此尺寸的實際長度，然後按 Enter。
+	Real length	實際長度
+	Calibrate on a known dimension	依已知尺寸校準
+	Click both ends of a dimension you know, then type its real length.	按一下已知尺寸的兩端，然後輸入其實際長度。
+	1. Choose the plan scale. 2. Click two points.	1. 選擇圖紙比例。2. 按一下兩個點。
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. 選擇圖紙比例。2. 按一下每個角點，然後按 Enter 或按兩下。
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. 選擇圖紙比例。2. 按一下每個角點，再按一下第一個點閉合。
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. 按一下已知尺寸的兩端。2. 輸入實際長度並按 Enter。
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. 選擇圖紙比例。2. 選擇工具並在圖紙上按一下。
 	Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels.	Shift 限制為 45 度角。Backspace 移除頂點。Escape 取消。
 	Angle	角度
 	Click the first point to begin.	按一下起點以開始。

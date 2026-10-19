@@ -2012,6 +2012,21 @@
 	Export measurements	Esporta misure
 	Open a PDF to measure it.	Apri un PDF per misurarlo.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Fai clic sui vertici. Invio o doppio clic termina un perimetro o un'area. Fai clic sul primo punto per chiudere un'area.
+	metres	metri
+	centimetres	centimetri
+	millimetres	millimetri
+	Plan scale	Scala del disegno
+	Measurements are in real {unit} at {ratio}.	Le misure sono in {unit} reali in scala {ratio}.
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	Nessuna scala: le misure sono in dimensioni della carta ({unit}). Scegli la scala del disegno.
+	Type the real length of this dimension, then press Enter.	Digita la lunghezza reale di questa quota, poi premi Invio.
+	Real length	Lunghezza reale
+	Calibrate on a known dimension	Calibra su una quota nota
+	Click both ends of a dimension you know, then type its real length.	Fai clic sui due estremi di una quota nota, poi digita la sua lunghezza reale.
+	1. Choose the plan scale. 2. Click two points.	1. Scegli la scala del disegno. 2. Fai clic su due punti.
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. Scegli la scala del disegno. 2. Fai clic su ogni vertice, poi Invio o doppio clic.
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. Scegli la scala del disegno. 2. Fai clic su ogni vertice, poi sul primo punto per chiudere.
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. Fai clic sui due estremi di una quota nota. 2. Digita la lunghezza reale e premi Invio.
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. Scegli la scala del disegno. 2. Scegli uno strumento e fai clic sul disegno.
 	Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels.	Maiusc vincola a 45 gradi. Backspace rimuove un vertice. Esc annulla.
 	Angle	Angolo
 	Click the first point to begin.	Fai clic sul primo punto per iniziare.

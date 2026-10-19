@@ -1925,6 +1925,21 @@ action wizard	Start	ప్రారంభించు
 	Export measurements	కొలతలను ఎగుమతి చేయి
 	Open a PDF to measure it.	కొలవడానికి ఒక PDFను తెరవండి.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	శీర్షాలను క్లిక్ చేయండి. Enter నొక్కితే లేదా డబుల్-క్లిక్ చేస్తే చుట్టుకొలత లేదా వైశాల్యం పూర్తవుతుంది. వైశాల్యాన్ని మూసివేయడానికి మొదటి బిందువును క్లిక్ చేయండి.
+	metres	మీటర్లు
+	centimetres	సెంటీమీటర్లు
+	millimetres	మిల్లీమీటర్లు
+	Plan scale	ప్లాన్ స్కేల్
+	Measurements are in real {unit} at {ratio}.	కొలతలు {ratio} స్కేల్‌లో నిజమైన {unit}లో ఉన్నాయి.
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	స్కేల్ లేదు: కొలతలు కాగితం పరిమాణంలో ఉన్నాయి ({unit}). ప్లాన్ స్కేల్‌ను ఎంచుకోండి.
+	Type the real length of this dimension, then press Enter.	ఈ కొలత యొక్క నిజమైన పొడవును టైప్ చేసి, Enter నొక్కండి.
+	Real length	నిజమైన పొడవు
+	Calibrate on a known dimension	తెలిసిన కొలతపై కాలిబ్రేట్ చేయండి
+	Click both ends of a dimension you know, then type its real length.	తెలిసిన కొలత యొక్క రెండు చివరలను క్లిక్ చేసి, దాని నిజమైన పొడవును టైప్ చేయండి.
+	1. Choose the plan scale. 2. Click two points.	1. ప్లాన్ స్కేల్‌ను ఎంచుకోండి. 2. రెండు బిందువులను క్లిక్ చేయండి.
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. ప్లాన్ స్కేల్‌ను ఎంచుకోండి. 2. ప్రతి మూలను క్లిక్ చేసి, Enter లేదా డబుల్-క్లిక్ చేయండి.
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. ప్లాన్ స్కేల్‌ను ఎంచుకోండి. 2. ప్రతి మూలను క్లిక్ చేసి, మూసివేయడానికి మొదటి బిందువును క్లిక్ చేయండి.
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. తెలిసిన కొలత యొక్క రెండు చివరలను క్లిక్ చేయండి. 2. నిజమైన పొడవును టైప్ చేసి Enter నొక్కండి.
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. ప్లాన్ స్కేల్‌ను ఎంచుకోండి. 2. ఒక సాధనాన్ని ఎంచుకుని ప్లాన్‌పై క్లిక్ చేయండి.
 	Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels.	Shift నొక్కితే కోణం 45 డిగ్రీలకు పరిమితమవుతుంది. Backspace ఒక శీర్షాన్ని తీసివేస్తుంది. Escape రద్దు చేస్తుంది.
 	Angle	కోణం
 	Click the first point to begin.	ప్రారంభించడానికి మొదటి బిందువును క్లిక్ చేయండి.

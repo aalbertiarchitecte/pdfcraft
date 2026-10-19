@@ -383,6 +383,21 @@
 	Click the first point to begin.	Kliknite prvo točko, da začnete.
 	Click to sort, drag to move the column. Drag its edge to resize it.	Kliknite za razvrščanje, povlecite za premik stolpca. Povlecite rob za spremembo širine.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Kliknite na točke. Enter ali dvoklik zaključi obseg ali ploščino. Kliknite prvo točko, da sklenete ploščino.
+	metres	metrih
+	centimetres	centimetrih
+	millimetres	milimetrih
+	Plan scale	Merilo načrta
+	Measurements are in real {unit} at {ratio}.	Meritve so v dejanskih {unit} v merilu {ratio}.
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	Ni merila: meritve so v velikosti papirja ({unit}). Izberite merilo načrta.
+	Type the real length of this dimension, then press Enter.	Vnesite dejansko dolžino te kote in pritisnite Enter.
+	Real length	Dejanska dolžina
+	Calibrate on a known dimension	Umeri na znano koto
+	Click both ends of a dimension you know, then type its real length.	Kliknite oba konca znane kote, nato vnesite njeno dejansko dolžino.
+	1. Choose the plan scale. 2. Click two points.	1. Izberite merilo načrta. 2. Kliknite dve točki.
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. Izberite merilo načrta. 2. Kliknite vsak vogal, nato Enter ali dvoklik.
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. Izberite merilo načrta. 2. Kliknite vsak vogal, nato prvo točko za zaprtje.
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. Kliknite oba konca znane kote. 2. Vnesite dejansko dolžino in pritisnite Enter.
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. Izberite merilo načrta. 2. Izberite orodje in kliknite na načrt.
 	Clipboard	Odložišče
 	Clockwise 90 degrees	90 stopinj desno
 	Close	Zapri

@@ -2021,6 +2021,21 @@ action wizard	Start	Iniciar
 	Export measurements	Exportar mediciones
 	Open a PDF to measure it.	Abre un PDF para medirlo.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Haz clic en los vértices. Intro o un doble clic termina un perímetro o un área. Haz clic en el primer punto para cerrar un área.
+	metres	metros
+	centimetres	centímetros
+	millimetres	milímetros
+	Plan scale	Escala del plano
+	Measurements are in real {unit} at {ratio}.	Las medidas están en {unit} reales a {ratio}.
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	Sin escala: las medidas están en tamaño de papel ({unit}). Elija la escala del plano.
+	Type the real length of this dimension, then press Enter.	Escriba la longitud real de esta cota y pulse Intro.
+	Real length	Longitud real
+	Calibrate on a known dimension	Calibrar con una cota conocida
+	Click both ends of a dimension you know, then type its real length.	Haga clic en los dos extremos de una cota conocida y escriba su longitud real.
+	1. Choose the plan scale. 2. Click two points.	1. Elija la escala del plano. 2. Haga clic en dos puntos.
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. Elija la escala del plano. 2. Haga clic en cada esquina y pulse Intro o doble clic.
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. Elija la escala del plano. 2. Haga clic en cada esquina y en el primer punto para cerrar.
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. Haga clic en los dos extremos de una cota conocida. 2. Escriba su longitud real y pulse Intro.
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. Elija la escala del plano. 2. Elija una herramienta y haga clic en el plano.
 	Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels.	Mayús restringe a 45 grados. Retroceso quita un vértice. Escape cancela.
 	Angle	Ángulo
 	Click the first point to begin.	Haz clic en el primer punto para empezar.

@@ -1926,6 +1926,21 @@
 	Export measurements	Mérések exportálása
 	Open a PDF to measure it.	Nyiss meg egy PDF-et a méréshez.
 	Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area.	Kattints a csúcspontokra. Az Enter vagy a dupla kattintás lezárja a kerületet vagy a területet. Az első pontra kattintva zárod a területet.
+	metres	méterben
+	centimetres	centiméterben
+	millimetres	milliméterben
+	Plan scale	Rajz méretaránya
+	Measurements are in real {unit} at {ratio}.	A mérések valós {unit} vannak, {ratio} méretarányban.
+	No scale: measurements are paper size ({unit}). Choose the plan scale.	Nincs méretarány: a mérések papírméretűek ({unit}). Válassza ki a rajz méretarányát.
+	Type the real length of this dimension, then press Enter.	Írja be ennek a méretnek a valós hosszát, majd nyomja meg az Entert.
+	Real length	Valós hossz
+	Calibrate on a known dimension	Kalibrálás ismert méretre
+	Click both ends of a dimension you know, then type its real length.	Kattintson egy ismert méret két végére, majd írja be a valós hosszát.
+	1. Choose the plan scale. 2. Click two points.	1. Válassza ki a rajz méretarányát. 2. Kattintson két pontra.
+	1. Choose the plan scale. 2. Click each corner, then press Enter or double-click.	1. Válassza ki a rajz méretarányát. 2. Kattintson minden sarokra, majd Enter vagy dupla kattintás.
+	1. Choose the plan scale. 2. Click each corner, then click the first point to close.	1. Válassza ki a rajz méretarányát. 2. Kattintson minden sarokra, majd a lezáráshoz az első pontra.
+	1. Click both ends of a known dimension. 2. Type its real length and press Enter.	1. Kattintson egy ismert méret két végére. 2. Írja be a valós hosszt, és nyomja meg az Entert.
+	1. Choose the plan scale. 2. Pick a tool and click on the plan.	1. Válassza ki a rajz méretarányát. 2. Válasszon eszközt, és kattintson a rajzra.
 	Shift constrains to 45 degrees. Backspace removes a vertex. Escape cancels.	A Shift 45 fokra korlátoz. A Backspace töröl egy csúcspontot. Az Escape megszakítja.
 	Angle	Szög
 	Click the first point to begin.	Kattints az első pontra a kezdéshez.

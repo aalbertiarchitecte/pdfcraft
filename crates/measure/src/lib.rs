@@ -454,6 +454,13 @@ pub fn scale_at(doc: &Document, page_index: usize, at: Point) -> Result<Scale> {
 /// [`scale_at`], but outside every viewport the page measures true size in `unit`, of which there
 /// are `per_point` in a PDF point (25.4 / 72 for millimetres).
 pub fn scale_at_or(doc: &Document, page_index: usize, at: Point, per_point: f64, unit: &str) -> Result<Scale> {
+    match viewport_scale(doc, page_index, at)? {
+        Some(scale) => Ok(scale),
+        None => Scale::new(page(doc, page_index)?.user_unit(doc) * per_point, unit, 2),
+    }
+}
+/// The scale of the last viewport containing `at`, or `None` where the page sets no scale there.
+pub fn viewport_scale(doc: &Document, page_index: usize, at: Point) -> Result<Option<Scale>> {
     check_points(&[at])?;
     let p = page(doc, page_index)?;
     if let Some(o) = p.dict.get(b"VP") {
@@ -471,12 +478,12 @@ pub fn scale_at_or(doc: &Document, page_index: usize, at: Point, per_point: f64,
                     && at[1] >= b[1].min(b[3])
                     && at[1] <= b[1].max(b[3])
                 {
-                    return Scale::read(doc, d.get(b"Measure").ok_or_else(|| invalid("viewport has no measurement scale"))?);
+                    return Scale::read(doc, d.get(b"Measure").ok_or_else(|| invalid("viewport has no measurement scale"))?).map(Some);
                 }
             }
         }
     }
-    Scale::new(p.user_unit(doc) * per_point, unit, 2)
+    Ok(None)
 }
 /// Add a named rectangular viewport. Existing viewports are preserved in drawing order.
 pub fn set_scale(doc: &mut Document, page_index: usize, bbox: [f64; 4], name: &str, scale: &Scale) -> Result<()> {
