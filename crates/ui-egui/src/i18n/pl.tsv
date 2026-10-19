@@ -2015,6 +2015,8 @@
 	Viewport rectangle in page points (x, y, width, height)	Prostokąt obszaru widoku w punktach strony (x, y, szerokość, wysokość)
 	Viewport	Obszar widoku
 	Apply scale	Zastosuj skalę
+	Scale	Skala
+	Type the real length between the two points, then Apply scale.	Wpisz rzeczywistą długość między dwoma punktami, a następnie Zastosuj skalę.
 	Saved measurements	Zapisane pomiary
 	Saved measurements.	Pomiary zapisane.
 	Endpoint	Punkt końcowy

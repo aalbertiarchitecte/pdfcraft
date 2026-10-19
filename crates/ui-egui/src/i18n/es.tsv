@@ -2037,6 +2037,8 @@ action wizard	Start	Iniciar
 	Viewport rectangle in page points (x, y, width, height)	Rectángulo de la ventana gráfica en puntos de página (x, y, ancho, alto)
 	Viewport	Ventana gráfica
 	Apply scale	Aplicar escala
+	Scale	Escala
+	Type the real length between the two points, then Apply scale.	Escriba la longitud real entre los dos puntos y luego Aplicar escala.
 	Saved measurements	Mediciones guardadas
 	Saved measurements.	Mediciones guardadas.
 	Endpoint	Extremo

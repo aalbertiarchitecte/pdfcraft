@@ -1756,6 +1756,8 @@
 	Viewport rectangle in page points (x, y, width, height)	Retângulo da janela de visualização em pontos da página (x, y, largura, altura)
 	Viewport	Janela de visualização
 	Apply scale	Aplicar escala
+	Scale	Escala
+	Type the real length between the two points, then Apply scale.	Digite o comprimento real entre os dois pontos e depois Aplicar escala.
 	Saved measurements	Medições salvas
 	Saved measurements.	Medições salvas.
 	Endpoint	Ponto final

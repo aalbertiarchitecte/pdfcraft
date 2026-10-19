@@ -2022,6 +2022,8 @@
 	Viewport rectangle in page points (x, y, width, height)	以頁面點數指定視埠矩形（x、y、寬度、高度）
 	Viewport	視埠
 	Apply scale	套用比例
+	Scale	比例
+	Type the real length between the two points, then Apply scale.	輸入兩點之間的實際長度，然後按「套用比例」。
 	Saved measurements	已儲存的測量
 	Saved measurements.	已儲存測量結果。
 	Endpoint	端點

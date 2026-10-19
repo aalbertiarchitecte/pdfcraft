@@ -1917,6 +1917,8 @@
 	Viewport rectangle in page points (x, y, width, height)	Sayfa noktalarında görünüm penceresi dikdörtgeni (x, y, genişlik, yükseklik)
 	Viewport	Görünüm penceresi
 	Apply scale	Ölçeği uygula
+	Scale	Ölçek
+	Type the real length between the two points, then Apply scale.	İki nokta arasındaki gerçek uzunluğu yazın, ardından Ölçeği uygula.
 	Saved measurements	Kayıtlı ölçümler
 	Saved measurements.	Ölçümler kaydedildi.
 	Endpoint	Uç nokta

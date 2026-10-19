@@ -57,6 +57,10 @@ pub struct MeasureView {
     pub whole_page: bool,
     pub rect: [f64; 4],
     pub label: String,
+    /// The "1:N" field of the drawing scale, as typed.
+    pub ratio_text: String,
+    /// Calibrate just set the drawing length: the panel asks for the real one.
+    pub calibrated: bool,
     seeded_page: Option<usize>,
     /// Snapping geometry (or why it failed) per (page, edit generation): extraction is not
     /// repeated on every hover frame.
@@ -84,6 +88,8 @@ impl Default for MeasureView {
             whole_page: true,
             rect: [0.0, 0.0, 100.0, 100.0],
             label: String::new(),
+            ratio_text: String::new(),
+            calibrated: false,
             seeded_page: None,
             paths: None,
             listing: None,
@@ -259,6 +265,8 @@ fn finish(state: &mut MeasureView, pending: &mut Option<Edit>, doc: &Document, p
             let b = doc.measurement_to_view(page, *b);
             if let (Ok(a), Ok(b)) = (a, b) {
                 state.drawing_points = measure::distance(a, b);
+                state.calibrated = true;
+                state.ratio_text.clear();
             }
         }
         state.cancel();
@@ -317,6 +325,8 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, _t: &Tokens) {
             state.real_distance = reading.value;
             state.unit = scale.unit;
             state.precision = scale.precision;
+            state.calibrated = false;
+            state.ratio_text = ratio_of(state.drawing_points, state.real_distance, &state.unit).map(format_ratio).unwrap_or_default();
         }
     }
     ui.label(tl!("Click vertices. Enter or double-click finishes a perimeter or area. Click the first point to close an area."));
@@ -352,6 +362,30 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, _t: &Tokens) {
     }
     ui.separator();
     ui.label(tl!("Drawing scale"));
+    ui.horizontal(|ui| {
+        ui.label(tl!("Scale"));
+        let current = ratio_of(state.drawing_points, state.real_distance, &state.unit).map(format_ratio);
+        let mut chosen = None;
+        egui::ComboBox::from_id_salt("measure-ratio").selected_text(current.clone().unwrap_or_else(|| "—".into())).width(90.0).show_ui(ui, |ui| {
+            for n in RATIOS {
+                if ui.selectable_label(current.as_deref() == Some(format_ratio(n).as_str()), format_ratio(n)).clicked() {
+                    chosen = Some(n);
+                }
+            }
+        });
+        let typed = ui.add(crate::widgets::line(&mut state.ratio_text).hint_text("1:N").desired_width(70.0).char_limit(16));
+        if typed.lost_focus()
+            && let Some(n) = parse_ratio(&state.ratio_text)
+        {
+            chosen = Some(n);
+        }
+        if let Some(n) = chosen {
+            set_ratio(state, n);
+        }
+    });
+    if state.calibrated {
+        ui.label(tl!("Type the real length between the two points, then Apply scale."));
+    }
     ui.horizontal(|ui| {
         ui.add(egui::DragValue::new(&mut state.drawing_points).range(0.000001..=1e9).prefix("pt "));
         ui.label("=");
@@ -413,7 +447,11 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, _t: &Tokens) {
                 Scale::calibrate(a, b, state.real_distance / state.drawing_points, &state.unit, state.precision).map_err(|e| e.to_string())
             });
         match result {
-            Ok(scale) => {
+            Ok(mut scale) => {
+                if let Some(n) = ratio_of(state.drawing_points, state.real_distance, &state.unit) {
+                    scale.ratio = format_ratio(n);
+                }
+                state.calibrated = false;
                 let [x, y, w, h] = if state.whole_page { [0.0, 0.0, f64::from(info.width), f64::from(info.height)] } else { state.rect };
                 let a = info.view_to_user(x as f32, y as f32);
                 let b = info.view_to_user((x + w) as f32, (y + h) as f32);
@@ -441,6 +479,51 @@ fn panel_body(app: &mut PdfCraftApp, ui: &mut egui::Ui, _t: &Tokens) {
     if export {
         export_csv(app);
     }
+}
+/// Drawing scales offered in the panel: 1:1 to 1:1000, as on an architect's scale rule.
+const RATIOS: [f64; 8] = [1.0, 10.0, 20.0, 50.0, 100.0, 200.0, 500.0, 1000.0];
+/// A PDF point in metres: 1/72 inch, 0.352777… mm.
+const POINT_IN_METRES: f64 = 0.0254 / 72.0;
+/// Metres in one `unit`, for the length units a drawing scale is written in.
+fn metres_per(unit: &str) -> Option<f64> {
+    Some(match unit.trim() {
+        "km" => 1000.0,
+        "m" => 1.0,
+        "dm" => 0.1,
+        "cm" => 0.01,
+        "mm" => 0.001,
+        "in" => 0.0254,
+        "ft" => 0.3048,
+        "yd" => 0.9144,
+        _ => return None,
+    })
+}
+/// The N of "1:N" for a drawing scale where `drawing_points` on the page stand for `real` `unit`s.
+fn ratio_of(drawing_points: f64, real: f64, unit: &str) -> Option<f64> {
+    let n = real * metres_per(unit)? / (drawing_points * POINT_IN_METRES);
+    (n.is_finite() && n > 0.0).then_some(n)
+}
+/// "1:200", "1/200", "1 : 200" or plain "200" (a comma works as the decimal mark).
+fn parse_ratio(text: &str) -> Option<f64> {
+    let text = text.trim().replace(',', ".");
+    let n = match text.split_once([':', '/']) {
+        Some((one, n)) => n.trim().parse::<f64>().ok()? / one.trim().parse::<f64>().ok()?,
+        None => text.parse::<f64>().ok()?,
+    };
+    (n.is_finite() && (1e-6..=1e9).contains(&n)).then_some(n)
+}
+/// "1:200", or "1:197.35" for a calibrated scale that isn't a round one.
+fn format_ratio(n: f64) -> String {
+    let rounded = (n * 100.0).round() / 100.0;
+    if (rounded - rounded.round()).abs() < 1e-9 { format!("1:{}", rounded.round()) } else { format!("1:{rounded}") }
+}
+/// Fills the scale fields for 1:N in metres: one inch of paper (72 pt) is N inches of building.
+fn set_ratio(state: &mut MeasureView, n: f64) {
+    state.drawing_points = 72.0;
+    state.real_distance = 0.0254 * n;
+    state.unit = "m".into();
+    state.ratio_text = format_ratio(n);
+    state.calibrated = false;
 }
 pub(crate) fn command(app: &mut PdfCraftApp, id: &str) {
     app.left = LeftPanel::Tool("measure");
@@ -489,6 +572,70 @@ fn export_csv(app: &mut PdfCraftApp) {
             if let Err(e) = crate::editing::download("measurements.csv", csv.as_bytes()) {
                 app.notify(&e);
             }
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// What the panel's Apply scale builds from its fields, then a distance read with it.
+    fn measured(state: &MeasureView, from: Point, to: Point) -> f64 {
+        let scale = Scale::calibrate([0.0, 0.0], [1.0, 0.0], state.real_distance / state.drawing_points, &state.unit, 4).expect("scale");
+        measure::reading(Kind::Distance, &[from, to], &scale).expect("reading").value
+    }
+
+    #[test]
+    fn a_hundred_points_at_1_200_are_7_0556_metres() {
+        let mut state = MeasureView::default();
+        set_ratio(&mut state, 200.0);
+        let m = measured(&state, [10.0, 10.0], [110.0, 10.0]);
+        assert!((m - 7.055_555_6).abs() < 1e-6, "{m}");
+        assert_eq!(format!("{m:.4}"), "7.0556");
+        assert_eq!(state.unit, "m");
+    }
+
+    #[test]
+    fn every_offered_ratio_is_paper_length_times_n() {
+        for n in RATIOS {
+            let mut state = MeasureView::default();
+            set_ratio(&mut state, n);
+            // 72 pt is one inch of paper: 25.4 mm × N.
+            let m = measured(&state, [0.0, 0.0], [0.0, 72.0]);
+            assert!((m - 0.0254 * n).abs() < 1e-9, "1:{n} gave {m}");
+            // A diagonal: 3-4-5 in points.
+            let d = measured(&state, [0.0, 0.0], [30.0, 40.0]);
+            assert!((d - 50.0 * 0.0254 / 72.0 * n).abs() < 1e-9);
+            assert_eq!(ratio_of(state.drawing_points, state.real_distance, &state.unit).map(format_ratio), Some(format_ratio(n)));
+        }
+    }
+
+    #[test]
+    fn the_ratio_follows_a_calibration_in_any_metric_unit() {
+        // 1 m drawn as 2834.6457 pt (1000 mm / 0.352778 mm) is 1:1.
+        let one_metre = 1.0 / POINT_IN_METRES;
+        assert_eq!(ratio_of(one_metre, 1.0, "m").map(format_ratio).as_deref(), Some("1:1"));
+        // 5 m measured over 70.866 pt (25 mm of paper) is 1:200, whatever unit it was typed in.
+        let paper = 0.025 / POINT_IN_METRES;
+        assert_eq!(ratio_of(paper, 5.0, "m").map(format_ratio).as_deref(), Some("1:200"));
+        assert_eq!(ratio_of(paper, 500.0, "cm").map(format_ratio).as_deref(), Some("1:200"));
+        assert_eq!(ratio_of(paper, 5000.0, "mm").map(format_ratio).as_deref(), Some("1:200"));
+        assert_eq!(ratio_of(paper, 4.9347, "m").map(format_ratio).as_deref(), Some("1:197.39"));
+        assert_eq!(ratio_of(paper, 5.0, "m²"), None);
+        assert_eq!(ratio_of(0.0, 5.0, "m"), None);
+    }
+
+    #[test]
+    fn typed_ratios_are_read_leniently() {
+        assert_eq!(parse_ratio("1:200"), Some(200.0));
+        assert_eq!(parse_ratio(" 1 : 50 "), Some(50.0));
+        assert_eq!(parse_ratio("1/20"), Some(20.0));
+        assert_eq!(parse_ratio("250"), Some(250.0));
+        assert_eq!(parse_ratio("1:2,5"), Some(2.5));
+        assert_eq!(parse_ratio("2:1"), Some(0.5));
+        for bad in ["", "1:", "abc", "1:0", "0:1", "1:-5", "1:inf", "1:NaN"] {
+            assert_eq!(parse_ratio(bad), None, "{bad}");
         }
     }
 }

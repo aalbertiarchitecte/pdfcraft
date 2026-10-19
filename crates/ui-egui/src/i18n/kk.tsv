@@ -1945,6 +1945,8 @@
 	Viewport rectangle in page points (x, y, width, height)	Көрініс аймағының тіктөртбұрышы бет пункттерінде (x, y, ені, биіктігі)
 	Viewport	Көрініс аймағы
 	Apply scale	Масштабты қолдану
+	Scale	Масштаб
+	Type the real length between the two points, then Apply scale.	Екі нүкте арасындағы нақты ұзындықты енгізіп, «Масштабты қолдану» түймесін басыңыз.
 	Saved measurements	Сақталған өлшемдер
 	Saved measurements.	Өлшемдер сақталды.
 	Endpoint	Шеткі нүкте

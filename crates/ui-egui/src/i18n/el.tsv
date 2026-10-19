@@ -1429,6 +1429,8 @@
 	Viewport rectangle in page points (x, y, width, height)	Ορθογώνιο προβολής σε σημεία σελίδας (x, y, πλάτος, ύψος)
 	Viewport	Περιοχή προβολής
 	Apply scale	Εφαρμογή κλίμακας
+	Scale	Κλίμακα
+	Type the real length between the two points, then Apply scale.	Πληκτρολογήστε το πραγματικό μήκος μεταξύ των δύο σημείων και μετά Εφαρμογή κλίμακας.
 	Saved measurements	Αποθηκευμένες μετρήσεις
 	Saved measurements.	Οι μετρήσεις αποθηκεύτηκαν.
 	Endpoint	Τελικό σημείο

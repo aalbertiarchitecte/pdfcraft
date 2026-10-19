@@ -2035,6 +2035,8 @@
 	Viewport rectangle in page points (x, y, width, height)	ページ上の矩形（ポイント単位：x、y、幅、高さ）
 	Viewport	ビューポート
 	Apply scale	縮尺を適用
+	Scale	縮尺
+	Type the real length between the two points, then Apply scale.	2 点間の実際の長さを入力し、「縮尺を適用」をクリックします。
 	Saved measurements	保存済みの測定
 	Saved measurements.	測定結果を保存しました。
 	Endpoint	端点

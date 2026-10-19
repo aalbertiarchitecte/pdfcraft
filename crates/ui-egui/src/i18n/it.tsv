@@ -2028,6 +2028,8 @@
 	Viewport rectangle in page points (x, y, width, height)	Rettangolo della viewport in punti pagina (x, y, larghezza, altezza)
 	Viewport	Viewport
 	Apply scale	Applica scala
+	Scale	Scala
+	Type the real length between the two points, then Apply scale.	Digita la lunghezza reale tra i due punti, poi Applica scala.
 	Saved measurements	Misure salvate
 	Saved measurements.	Misure salvate.
 	Endpoint	Estremo

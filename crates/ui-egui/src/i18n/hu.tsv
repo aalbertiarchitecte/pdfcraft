@@ -1942,6 +1942,8 @@
 	Viewport rectangle in page points (x, y, width, height)	Nézetablak téglalapja oldalpontokban (x, y, szélesség, magasság)
 	Viewport	Nézetablak
 	Apply scale	Méretarány alkalmazása
+	Scale	Méretarány
+	Type the real length between the two points, then Apply scale.	Írja be a két pont közötti valós hosszt, majd Méretarány alkalmazása.
 	Saved measurements	Mentett mérések
 	Saved measurements.	Mérések mentve.
 	Endpoint	Végpont

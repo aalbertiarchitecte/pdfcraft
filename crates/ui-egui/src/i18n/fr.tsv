@@ -1952,6 +1952,8 @@
 	Viewport rectangle in page points (x, y, width, height)	Rectangle de la fenêtre d'affichage en points de page (x, y, largeur, hauteur)
 	Viewport	Fenêtre d'affichage
 	Apply scale	Appliquer l'échelle
+	Scale	Échelle
+	Type the real length between the two points, then Apply scale.	Saisissez la longueur réelle entre les deux points, puis Appliquer l'échelle.
 	Saved measurements	Mesures enregistrées
 	Saved measurements.	Mesures enregistrées.
 	Endpoint	Extrémité

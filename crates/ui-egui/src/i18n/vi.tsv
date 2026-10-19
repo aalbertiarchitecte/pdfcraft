@@ -285,6 +285,8 @@ theme	Appearance	Giao diện
 	Applies to {n} pages	Áp dụng cho {n} trang
 	Apply redactions	Xóa vĩnh viễn nội dung đã đánh dấu
 	Apply scale	Áp dụng tỷ lệ
+	Scale	Tỷ lệ
+	Type the real length between the two points, then Apply scale.	Nhập độ dài thực giữa hai điểm, rồi nhấn Áp dụng tỷ lệ.
 	Asks GitHub for the latest release. Nothing is downloaded or installed automatically.	Hỏi GitHub về bản phát hành mới nhất. Không có gì được tải xuống hoặc cài đặt tự động.
 	At most	Tối đa
 	Attachments	Tệp đính kèm

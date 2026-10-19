@@ -1892,6 +1892,8 @@
 	Viewport rectangle in page points (x, y, width, height)	以页面点数指定视口矩形（x、y、宽度、高度）
 	Viewport	视口
 	Apply scale	应用比例
+	Scale	比例
+	Type the real length between the two points, then Apply scale.	输入两点之间的实际长度，然后点击“应用比例”。
 	Saved measurements	已保存的测量
 	Saved measurements.	已保存测量结果。
 	Endpoint	端点

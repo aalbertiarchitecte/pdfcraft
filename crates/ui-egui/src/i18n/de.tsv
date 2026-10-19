@@ -1957,6 +1957,8 @@
 	Viewport rectangle in page points (x, y, width, height)	Ausschnittsrechteck in Seitenpunkten (x, y, Breite, Höhe)
 	Viewport	Ausschnitt
 	Apply scale	Maßstab anwenden
+	Scale	Maßstab
+	Type the real length between the two points, then Apply scale.	Geben Sie die reale Länge zwischen den beiden Punkten ein, dann Maßstab anwenden.
 	Saved measurements	Gespeicherte Messungen
 	Saved measurements.	Messungen gespeichert.
 	Endpoint	Endpunkt

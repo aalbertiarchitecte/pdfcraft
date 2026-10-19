@@ -287,6 +287,8 @@
 	Applies to {n} pages	Taikoma {n} puslapiams
 	Apply redactions	Pašalinti pažymėtą konfidencialią informaciją
 	Apply scale	Taikyti mastelį
+	Scale	Mastelis
+	Type the real length between the two points, then Apply scale.	Įveskite tikrąjį ilgį tarp dviejų taškų, tada Taikyti mastelį.
 	Asks GitHub for the latest release. Nothing is downloaded or installed automatically.	„GitHub“ tikrinama, ar yra naujausia laida. Nieko automatiškai neatsisiunčiama ir neįdiegiama.
 	At most	Daugiausia
 	Attachments	Priedai

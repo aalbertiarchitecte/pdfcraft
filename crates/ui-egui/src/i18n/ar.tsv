@@ -2021,6 +2021,8 @@
 	Viewport rectangle in page points (x, y, width, height)	مستطيل منفذ العرض بنقاط الصفحة (x, y, العرض, الارتفاع)
 	Viewport	منفذ العرض
 	Apply scale	تطبيق المقياس
+	Scale	المقياس
+	Type the real length between the two points, then Apply scale.	اكتب الطول الحقيقي بين النقطتين، ثم انقر «تطبيق المقياس».
 	Saved measurements	القياسات المحفوظة
 	Saved measurements.	حُفظت القياسات.
 	Endpoint	نقطة نهاية

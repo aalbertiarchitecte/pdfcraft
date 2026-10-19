@@ -2068,6 +2068,8 @@ key	Space	Mezerník
 	Viewport rectangle in page points (x, y, width, height)	Obdélník výřezu v bodech stránky (x, y, šířka, výška)
 	Viewport	Výřez
 	Apply scale	Použít měřítko
+	Scale	Měřítko
+	Type the real length between the two points, then Apply scale.	Zadejte skutečnou délku mezi oběma body a poté Použít měřítko.
 	Saved measurements	Uložená měření
 	Saved measurements.	Měření uložena.
 	Endpoint	Koncový bod

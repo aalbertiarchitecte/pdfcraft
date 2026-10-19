@@ -2022,6 +2022,8 @@
 	Viewport rectangle in page points (x, y, width, height)	Прямоугольник области просмотра в точках страницы (x, y, ширина, высота)
 	Viewport	Область просмотра
 	Apply scale	Применить масштаб
+	Scale	Масштаб
+	Type the real length between the two points, then Apply scale.	Введите реальную длину между двумя точками, затем «Применить масштаб».
 	Saved measurements	Сохранённые измерения
 	Saved measurements.	Сохранённые измерения.
 	Endpoint	Конечная точка

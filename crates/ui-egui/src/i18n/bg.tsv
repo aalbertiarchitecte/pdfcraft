@@ -1884,6 +1884,8 @@
 	Viewport rectangle in page points (x, y, width, height)	Правоъгълник на изгледа в точки на страницата (x, y, ширина, височина)
 	Viewport	Област на изгледа
 	Apply scale	Приложи мащаба
+	Scale	Мащаб
+	Type the real length between the two points, then Apply scale.	Въведете реалната дължина между двете точки, после „Приложи мащаба“.
 	Saved measurements	Запазени измервания
 	Saved measurements.	Измерванията са запазени.
 	Endpoint	Крайна точка

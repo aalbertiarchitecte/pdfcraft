@@ -1941,6 +1941,8 @@ action wizard	Start	ప్రారంభించు
 	Viewport rectangle in page points (x, y, width, height)	పేజీ పాయింట్‌లలో వ్యూపోర్ట్ దీర్ఘచతురస్రం (x, y, వెడల్పు, ఎత్తు)
 	Viewport	వ్యూపోర్ట్
 	Apply scale	స్కేల్ వర్తింపజేయి
+	Scale	స్కేల్
+	Type the real length between the two points, then Apply scale.	రెండు బిందువుల మధ్య నిజమైన పొడవును టైప్ చేసి, ఆపై స్కేల్ వర్తింపజేయి నొక్కండి.
 	Saved measurements	సేవ్ చేసిన కొలతలు
 	Saved measurements.	కొలతలు సేవ్ చేయబడ్డాయి.
 	Endpoint	అంత్య బిందువు
