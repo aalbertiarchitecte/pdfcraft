@@ -637,6 +637,7 @@ impl PdfCraftApp {
         let (name, path) = (doc.name.clone(), doc.path.clone());
         #[cfg(not(target_arch = "wasm32"))]
         {
+            let doc_path = path.clone();
             let destination = match (target, path, &self.save_override) {
                 (_, _, Some(p)) => p.clone(),
                 // An email attachment's temporary copy is no place to keep work: ask, as for a new
@@ -645,6 +646,7 @@ impl PdfCraftApp {
                 _ => {
                     let name = if name.to_ascii_lowercase().ends_with(".pdf") { name } else { format!("{name}.pdf") };
                     let dialog = rfd::AsyncFileDialog::new().add_filter("PDF", &["pdf"]).set_file_name(name);
+                    let dialog = in_document_folder(dialog, doc_path.as_deref());
                     // The bytes are taken once the user has chosen, so edits made meanwhile are saved too.
                     self.ask_one(crate::pickers::Ask::Save(dialog), None, move |app, dest| {
                         app.save_doc_to_then(id, &dest.to_string_lossy(), target, Box::new(after));
@@ -1030,6 +1032,25 @@ pub(crate) fn is_mail_temp_copy(path: &str) -> bool {
         || p.contains("/library/containers/com.apple.mail/data/library/mail downloads/")
 }
 
+/// The folder a Save As style dialog should open in for a document stored at `path`: the
+/// document's own folder, as Acrobat and Foxit do, instead of whichever folder the system picks.
+/// `None` (keep the system's choice) for a new document, a path with no parent, or an email
+/// attachment's temporary copy (`is_mail_temp_copy`), which is no place to keep work. Also right
+/// for UNC paths on Windows (`\\server\share\dir\f.pdf` gives `\\server\share\dir`).
+pub(crate) fn save_dialog_folder(path: Option<&str>) -> Option<std::path::PathBuf> {
+    let path = path.filter(|p| !is_mail_temp_copy(p))?;
+    let parent = std::path::Path::new(path).parent()?;
+    (!parent.as_os_str().is_empty()).then(|| parent.to_path_buf())
+}
+
+/// `dialog` opened in the folder of the document stored at `path` ([`save_dialog_folder`]).
+pub(crate) fn in_document_folder(dialog: rfd::AsyncFileDialog, path: Option<&str>) -> rfd::AsyncFileDialog {
+    match save_dialog_folder(path) {
+        Some(dir) => dialog.set_directory(dir),
+        None => dialog,
+    }
+}
+
 /// Write via a temporary file in the same directory and rename over the target, so a crash or
 /// full disk never leaves a half-written PDF where the original was.
 pub fn write_atomically(path: &str, bytes: &[u8]) -> std::io::Result<()> {
@@ -1142,7 +1163,31 @@ fn bookmark_at<'a>(items: &'a [pdfcraft_render::OutlineItem], path: &[usize]) ->
 
 #[cfg(test)]
 mod tests {
-    use super::{SaveTarget, is_mail_temp_copy, write_atomically, write_atomically_syncing, write_atomically_with};
+    use super::{SaveTarget, is_mail_temp_copy, save_dialog_folder, write_atomically, write_atomically_syncing, write_atomically_with};
+
+    #[test]
+    fn save_dialogs_open_in_the_documents_folder() {
+        use std::path::PathBuf;
+        assert_eq!(save_dialog_folder(Some("/home/a/plans/f.pdf")), Some(PathBuf::from("/home/a/plans")));
+        // A new document has no folder yet; a bare name has an empty parent; the root has none.
+        assert_eq!(save_dialog_folder(None), None);
+        assert_eq!(save_dialog_folder(Some("f.pdf")), None);
+        assert_eq!(save_dialog_folder(Some("/")), None);
+        // An email attachment's temporary copy is not offered.
+        assert_eq!(save_dialog_folder(Some("C:\\Users\\a\\AppData\\Local\\Microsoft\\Windows\\INetCache\\Content.Outlook\\AB12\\f.pdf")), None);
+        assert_eq!(save_dialog_folder(Some("/Users/a/Library/Containers/com.apple.mail/Data/Library/Mail Downloads/UUID/f.pdf")), None);
+    }
+
+    /// The Windows rules for `Path::parent` (UNC share roots included) only apply on Windows.
+    #[cfg(windows)]
+    #[test]
+    fn save_dialog_folder_handles_unc_paths() {
+        use std::path::PathBuf;
+        assert_eq!(save_dialog_folder(Some(r"\\nas\projets\2026\f.pdf")), Some(PathBuf::from(r"\\nas\projets\2026")));
+        assert_eq!(save_dialog_folder(Some(r"\\nas\projets\f.pdf")), Some(PathBuf::from(r"\\nas\projets\")));
+        assert_eq!(save_dialog_folder(Some(r"\\nas\projets")), None);
+        assert_eq!(save_dialog_folder(Some(r"C:\Users\a\f.pdf")), Some(PathBuf::from(r"C:\Users\a")));
+    }
     use pdfcraft_platform::staging::{STAGING_ATTEMPTS, staging_suffixes};
     use std::path::{Path, PathBuf};
 
