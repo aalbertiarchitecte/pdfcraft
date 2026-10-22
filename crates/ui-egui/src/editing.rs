@@ -1019,16 +1019,22 @@ fn is_form_edit(edit: &Edit) -> bool {
 ///
 /// Outlook opens an attachment from its own cache: `INetCache\Content.Outlook\<random>\` for
 /// classic Outlook (`Temporary Internet Files\Content.Outlook\` on older Windows), and the
-/// `Microsoft.OutlookForWindows` package folder for the new Outlook. Saving there either fails,
+/// `Packages\Microsoft.OutlookForWindows_<id>` package folder for the new Outlook. The patterns
+/// follow those layouts, so an ordinary folder that merely shares a name doesn't match. Saving there either fails,
 /// because Outlook can still hold the file, or appears to work while the edits stay out of the
 /// email and are deleted with the cache. Apple Mail opens one from `Mail Downloads/<UUID>/` in
 /// its sandbox container, where other apps can't write, so saving there fails (#2751). Matched on
 /// either separator and in any case, so it can be tested on every platform.
 pub(crate) fn is_mail_temp_copy(path: &str) -> bool {
     let p = path.replace('\\', "/").to_ascii_lowercase();
-    p.contains("/inetcache/content.outlook/")
-        || p.contains("/temporary internet files/content.outlook/")
-        || p.contains("/microsoft.outlookforwindows")
+    // Outlook's cache holds `<marker><random folder>/<file>`: exactly one folder, then the file.
+    let in_outlook_cache = |marker: &str| {
+        p.split_once(marker)
+            .is_some_and(|(_, rest)| matches!(rest.split('/').collect::<Vec<_>>()[..], [dir, file] if !dir.is_empty() && !file.is_empty()))
+    };
+    in_outlook_cache("/inetcache/content.outlook/")
+        || in_outlook_cache("/temporary internet files/content.outlook/")
+        || p.contains("/packages/microsoft.outlookforwindows_")
         || p.contains("/library/containers/com.apple.mail/data/library/mail downloads/")
 }
 
@@ -1410,6 +1416,9 @@ mod tests {
             r"C:\Users\me\Documents\Quote.pdf",
             r"C:\Users\me\OneDrive - Contoso\Content.Outlook notes\Quote.pdf",
             r"C:\Users\me\AppData\Local\Microsoft\Windows\INetCache\IE\Quote.pdf",
+            "/home/microsoft.outlookforwindows/report.pdf",
+            "/x/inetcache/content.outlook/y.pdf",
+            "/x/temporary internet files/content.outlook/y.pdf",
             "/home/me/Documents/Quote.pdf",
             "/Users/me/Downloads/Mail Downloads/booking.pdf",
             "/Users/me/Library/Containers/com.apple.Notes/Data/Library/Mail Downloads/booking.pdf",
